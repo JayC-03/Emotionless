@@ -12,29 +12,29 @@ extern ee_interpreter* interpreter;
 
 union ee_reg
 {
-  u64 ud[2];
-  s64 sd[2];
-  u32 ul[4];
-  s32 sl[4];
-  u16 us[8];
-  s16 ss[8];
-  u8 uc[16];
-  s8 sc[16];
+    u64 ud[2];
+    s64 sd[2];
+    u32 ul[4];
+    s32 sl[4];
+    u16 us[8];
+    s16 ss[8];
+    u8 uc[16];
+    s8 sc[16];
 };
 
 struct ee_state_t
 {
-  ee_reg gpr[32];
-  
-  ee_reg hi,lo;
-  
-  u32 cop0r[32];
-  
-  u32 delay_slot;
-  u32 pc;
-  u32 npc;
-  u32 code;
-  int branch;
+    ee_reg gpr[32];
+
+    ee_reg hi,lo;
+
+    u32 cop0r[32];
+
+    u32 delay_slot;
+    u32 pc;
+    u32 npc;
+    u32 code;
+    int branch;
 };
 
 extern ee_state_t ee_state;
