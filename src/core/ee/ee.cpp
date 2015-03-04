@@ -10,24 +10,10 @@ ee_interpreter* interpreter;
 
 u32 TranslateAddress(u32 virt_addr)
 {
-    //Checking Status.KSU
-    switch((ee_state.cop0r[12] >> 3) & 3)
-    {
-    case 0:
-    {
-        //TODO: HACKY
-        if(virt_addr >= 0x70000000 && virt_addr < 0x70004000) return (virt_addr - 0x6e000000);
-        if(virt_addr >= 0x30100000 && virt_addr < 0x32000000) return (virt_addr - 0x30000000);
-        return virt_addr & 0x1fffffff;
-        break;
-    }
-    default:
-    {
-        log_print("EE", "Unknown/Unimplemented Status.KSU state " + to_string((ee_state.cop0r[12] >> 3) & 3), log_level::warning);
-        break;
-    }
-    }
-    return 0;
+    //TODO: HACKY
+    if(virt_addr >= 0x70000000 && virt_addr < 0x70004000) return (virt_addr - 0x6e000000);
+    if(virt_addr >= 0x30100000 && virt_addr < 0x32000000) return (virt_addr - 0x30000000);
+    return virt_addr & 0x1fffffff;
 }
 
 u32 Read32(u32 virt_addr)
