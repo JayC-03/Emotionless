@@ -9,11 +9,26 @@ void ee_interpreter::sll(ee_inst inst)
 void ee_interpreter::slti(ee_inst inst)
 {
     rGPR[inst.RT].ud[1] = 0;
-    if(rGPR[inst.RT].ud[0] < (s64)inst.SIMM_16) rGPR[inst.RT].ud[0] = 1;
+    if(rGPR[inst.RS].ud[0] < (u64)(s64)inst.SIMM_16) rGPR[inst.RT].ud[0] = 1;
     else rGPR[inst.RT].ud[0] = 0;
 }
 
 void ee_interpreter::ori(ee_inst inst)
 {
     rGPR[inst.RT].ud[0] |= inst.UIMM_16;
+}
+
+void ee_interpreter::addiu(ee_inst inst)
+{
+    rGPR[inst.RT].ud[0] = rGPR[inst.RD].ud[0] + (u64)(s64)inst.SIMM_16;
+}
+
+void ee_interpreter::mfhi(ee_inst inst)
+{
+    rGPR[inst.RT].ud[0] = EE::ee_state.hi.ud[0];
+}
+
+void ee_interpreter::sync(ee_inst inst)
+{
+    //TODO: This doesn't need to be implemented yet.
 }

@@ -5,7 +5,9 @@
 
 std::function<void(ee_inst)> ee_interpreter::op_table[64];
 std::function<void(ee_inst)> ee_interpreter::op_table0[64];
+std::function<void(ee_inst)> ee_interpreter::op_table1[32];
 std::function<void(ee_inst)> ee_interpreter::op_table16[32];
+std::function<void(ee_inst)> ee_interpreter::op_table16_16[64];
 
 void ee_interpreter::init()
 {
@@ -30,6 +32,12 @@ void ee_interpreter::single_step()
 
     log_print("EE Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::verbose);
 
+    log_print("EE Interpreter", "Instruction RS: " + to_string(inst_code.RS), log_level::verbose);
+
+    log_print("EE Interpreter", "Instruction RT: " + to_string(inst_code.RT), log_level::verbose);
+
+    log_print("EE Interpreter", "Instruction RD: " + to_string(inst_code.RD), log_level::verbose);
+
     log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);
 
     if(EE::ee_state.branch)
@@ -43,7 +51,7 @@ void ee_interpreter::single_step()
         }
         else if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
     }
-    
+
     else if(EE::ee_state.jump)
     {
         EE::ee_state.jump = 0;
@@ -62,9 +70,22 @@ void ee_interpreter::unknown(ee_inst inst)
     log_print("EE Interpreter", "Unknown instruction " + to_string(inst.hex) + " at address " + to_string(PC), log_level::error);
 }
 
-void ee_interpreter::run_table0(ee_inst inst) {
+void ee_interpreter::run_table0(ee_inst inst)
+{
     op_table0[inst.funct](inst);
 }
-void ee_interpreter::run_table16(ee_inst inst) {
+
+void ee_interpreter::run_table1(ee_inst inst)
+{
+    op_table1[inst.RT](inst);
+}
+
+void ee_interpreter::run_table16(ee_inst inst)
+{
     op_table16[inst.RS](inst);
+}
+
+void ee_interpreter::run_table16_16(ee_inst inst)
+{
+    op_table16_16[inst.funct](inst);
 }

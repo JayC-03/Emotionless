@@ -22,3 +22,10 @@ void ee_interpreter::jr(ee_inst inst)
     EE::ee_state.jump = 1;
     EE::ee_state.jump_target = rGPR[inst.RS].ul[0];
 }
+
+void ee_interpreter::jalr(ee_inst inst)
+{
+    EE::ee_state.jump = 1;
+    EE::ee_state.jump_target = rGPR[inst.RS].ul[0];
+    rGPR[inst.RD].ud[0] = PC + 8;
+}
