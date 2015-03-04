@@ -10,7 +10,7 @@ u32 Read32(u32 phys_addr)
     //BIOS region
     //TODO: not sure if mirrored.
     if(phys_addr < 0x20000000) res = bios[(phys_addr & 0xffffc) >> 2];
-    res = bswap32(res);
+    //res = bswap32(res);
     return res;
 }
 }

@@ -22,4 +22,10 @@ public:
     static void run_table16(ee_inst inst);
 
     static void sll(ee_inst inst);
+    static void mfc0(ee_inst inst);
+    static void blezl(ee_inst inst);
+    static void bne(ee_inst inst);
+    static void slti(ee_inst inst);
+    static void ori(ee_inst inst);
+    static void jr(ee_inst inst);
 };

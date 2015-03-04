@@ -10,6 +10,7 @@ std::function<void(ee_inst)> ee_interpreter::op_table16[32];
 void ee_interpreter::init()
 {
     PC = 0xbfc00000;
+    rCOP0[15] = 0x00002e20; //TODO: Value taken from PCSX2. VERIFY
     EE::interpreter_tables::init_tables();
 }
 
@@ -31,9 +32,29 @@ void ee_interpreter::single_step()
 
     log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);
 
+    if(EE::ee_state.branch)
+    {
+        EE::ee_state.branch = 0;
+        if(EE::ee_state.branch_likely)
+        {
+            EE::ee_state.branch_likely = 0;
+            if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
+            else goto skip_opcode;
+        }
+        else if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
+    }
+    
+    else if(EE::ee_state.jump)
+    {
+        EE::ee_state.jump = 0;
+        PC = EE::ee_state.jump_target;
+    }
+
     op_table[inst_code.opcd](inst_code);
 
-    PC = NPC;
+skip_opcode:
+
+    PC += 4;
 }
 
 void ee_interpreter::unknown(ee_inst inst)

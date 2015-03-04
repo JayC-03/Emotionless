@@ -17,12 +17,22 @@ struct ee_op_template
 static ee_op_template primary_table[] =
 {
     {0,  ee_interpreter::run_table0},
+    {5,  ee_interpreter::bne},
+    {10, ee_interpreter::slti},
+    {13, ee_interpreter::ori},
     {16, ee_interpreter::run_table16},
+    {22, ee_interpreter::blezl},
 };
 
 static ee_op_template table0[] =
 {
     {0, ee_interpreter::sll},
+    {8, ee_interpreter::jr},
+};
+
+static ee_op_template table16[] =
+{
+    {0, ee_interpreter::mfc0},
 };
 
 void init_tables()
@@ -50,6 +60,11 @@ void init_tables()
     for(auto& tbl_op : table0)
     {
         ee_interpreter::op_table0[tbl_op.opcode] = tbl_op.inst;
+    }
+    
+    for(auto& tbl_op : table16)
+    {
+        ee_interpreter::op_table16[tbl_op.opcode] = tbl_op.inst;
     }
 }
 }

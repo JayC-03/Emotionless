@@ -30,11 +30,15 @@ struct ee_state_t
 
     u32 cop0r[32];
 
-    u32 delay_slot;
     u32 pc;
     u32 npc;
+    u32 condition;
     u32 code;
-    int branch;
+    u32 branch;
+    u32 branch_likely;
+    s32 branch_offset;
+    u32 jump;
+    u32 jump_target;
 };
 
 extern ee_state_t ee_state;
@@ -42,6 +46,7 @@ extern ee_state_t ee_state;
 #define PC EE::ee_state.pc
 #define NPC EE::ee_state.npc
 #define rGPR EE::ee_state.gpr
+#define rCOP0 EE::ee_state.cop0r
 
 u32 TranslateAddress(u32 virt_addr);
 

@@ -2,5 +2,5 @@
 
 int main()
 {
-  main_loop();
+    main_loop();
 }
