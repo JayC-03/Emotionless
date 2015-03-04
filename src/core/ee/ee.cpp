@@ -16,6 +16,11 @@ u32 TranslateAddress(u32 virt_addr)
     return virt_addr & 0x1fffffff;
 }
 
+u8 Read8(u32 virt_addr)
+{
+    return Memory::Read8(TranslateAddress(virt_addr));
+}
+
 u32 Read32(u32 virt_addr)
 {
     return Memory::Read32(TranslateAddress(virt_addr));

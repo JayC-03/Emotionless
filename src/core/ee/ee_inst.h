@@ -32,4 +32,10 @@ union ee_inst
         u32 UIMM_16 : 16;
         u32 : 16;
     };
+    
+    struct
+    {
+        u32 instr_index : 26;
+        u32 : 6;
+    };
 };

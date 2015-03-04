@@ -13,6 +13,9 @@ typedef int16_t s16;
 typedef int32_t s32;
 typedef int64_t s64;
 
+typedef float f32;
+typedef double f64;
+
 #if defined(__GNUC__) || defined(__GNUG__)
 #define bswap32 __builtin_bswap32
 #define bswap64 __builtin_bswap64

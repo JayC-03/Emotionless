@@ -10,7 +10,7 @@ void main_loop()
 
     EE::interpreter->init();
 
-    for(int i = 0; i<50; i++)
+    for(int i = 0; i<150; i++)
     {
         EE::interpreter->single_step();
     }

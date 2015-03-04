@@ -29,6 +29,8 @@ struct ee_state_t
     ee_reg hi,lo;
 
     u32 cop0r[32];
+    
+    u32 cop1r[32];
 
     u32 pc;
     u32 npc;
@@ -46,10 +48,14 @@ extern ee_state_t ee_state;
 #define PC EE::ee_state.pc
 #define NPC EE::ee_state.npc
 #define rGPR EE::ee_state.gpr
+#define rFPR EE::ee_state.gpr
+#define rLO EE::ee_state.lo
+#define rHI EE::ee_state.hi
 #define rCOP0 EE::ee_state.cop0r
 
 u32 TranslateAddress(u32 virt_addr);
 
+u8 Read8(u32 virt_addr);
 u32 Read32(u32 virt_addr);
 
 void Write32(u32 virt_addr, u32 data);
