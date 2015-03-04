@@ -12,3 +12,10 @@ Goals
 - Clean code
 - As small an amount of hacks and kludges as possible
 - Accuracy as long it is still playable on modern computers.
+
+Contribution guide
+==================
+
+- Write code
+- Run astyle over changes
+- PR code
