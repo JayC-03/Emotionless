@@ -57,6 +57,7 @@ u32 TranslateAddress(u32 virt_addr);
 
 u8 Read8(u32 virt_addr);
 u32 Read32(u32 virt_addr);
+u64 Read64(u32 virt_addr);
 
 void Write32(u32 virt_addr, u32 data);
 void Write64(u32 virt_addr, u64 data);

@@ -33,7 +33,9 @@ static ee_op_template primary_table[] =
     {22, ee_interpreter::blezl},
     {31, ee_interpreter::sq},
     {32, ee_interpreter::lb},
+    {35, ee_interpreter::lw},
     {43, ee_interpreter::sw},
+    {55, ee_interpreter::ld},
     {63, ee_interpreter::sd},
 };
 
@@ -48,6 +50,7 @@ static ee_op_template table0[] =
     {18, ee_interpreter::mflo},
     {24, ee_interpreter::mult},
     {27, ee_interpreter::divu},
+    {36, ee_interpreter::and_ee},
     {37, ee_interpreter::or_ee},
     {42, ee_interpreter::slt},
     {43, ee_interpreter::sltu},

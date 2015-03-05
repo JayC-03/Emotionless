@@ -34,6 +34,12 @@ u32 Read32(u32 phys_addr)
     return res;
 }
 
+u64 Read64(u32 phys_addr)
+{
+    log_print("Memory", "Read64 from physical address " + to_string(phys_addr), log_level::warning);
+    return ((u64)Read32(phys_addr + 4) << 32) | Read32(phys_addr);
+}
+
 void Write32(u32 phys_addr, u32 data)
 {
     //RAM

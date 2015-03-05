@@ -47,7 +47,11 @@ void ee_interpreter::single_step()
         {
             EE::ee_state.branch_likely = 0;
             if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
-            else goto skip_opcode;
+            else
+            {
+                PC += 4;
+                return;
+            }
         }
         else if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
     }
@@ -56,11 +60,10 @@ void ee_interpreter::single_step()
     {
         EE::ee_state.jump = 0;
         PC = EE::ee_state.jump_target;
+        return;
     }
 
     op_table[inst_code.opcd](inst_code);
-
-skip_opcode:
 
     PC += 4;
 }

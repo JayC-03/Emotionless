@@ -41,6 +41,11 @@ void ee_interpreter::sltiu(ee_inst inst)
     else rGPR[inst.RT].ud[0] = 0;
 }
 
+void ee_interpreter::and_ee(ee_inst inst)
+{
+    rGPR[inst.RD].ud[0] = rGPR[inst.RS].ud[0] & rGPR[inst.RT].ud[0];
+}
+
 void ee_interpreter::ori(ee_inst inst)
 {
     rGPR[inst.RT].ud[0] = rGPR[inst.RS].ud[0] | inst.UIMM_16;

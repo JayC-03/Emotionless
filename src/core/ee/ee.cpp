@@ -26,6 +26,11 @@ u32 Read32(u32 virt_addr)
     return Memory::Read32(TranslateAddress(virt_addr));
 }
 
+u64 Read64(u32 virt_addr)
+{
+    return Memory::Read64(TranslateAddress(virt_addr));
+}
+
 void Write32(u32 virt_addr, u32 data)
 {
     Memory::Write32(TranslateAddress(virt_addr),data);

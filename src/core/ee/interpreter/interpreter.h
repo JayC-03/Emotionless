@@ -39,6 +39,7 @@ public:
     static void sltu(ee_inst inst);
     static void slti(ee_inst inst);
     static void sltiu(ee_inst inst);
+    static void and_ee(ee_inst inst);
     static void ori(ee_inst inst);
     static void or_ee(ee_inst inst);
     static void mult(ee_inst inst);
@@ -50,6 +51,8 @@ public:
     static void jalr(ee_inst inst);
     static void jal(ee_inst inst);
     static void lb(ee_inst inst);
+    static void lw(ee_inst inst);
+    static void ld(ee_inst inst);
     static void lui(ee_inst inst);
     static void sw(ee_inst inst);
     static void sd(ee_inst inst);
