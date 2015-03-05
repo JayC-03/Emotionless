@@ -2,4 +2,4 @@ set(SRCS
 log.cpp
 )
 
-add_pcps2_library(common "${SRCS}" "")
+add_emotionless_library(common "${SRCS}" "")

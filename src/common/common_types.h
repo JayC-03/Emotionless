@@ -1,7 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <cstdlib>
 #include <functional>
+#include <vector>
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -24,3 +26,5 @@ typedef double f64;
 #define bswap32 _byteswap_ulong
 #define bswap64 _byteswap_uint64
 #endif
+
+#define vector std::vector

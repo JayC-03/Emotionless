@@ -31,6 +31,7 @@ static ee_op_template primary_table[] =
     {20, ee_interpreter::beql},
     {21, ee_interpreter::bnel},
     {22, ee_interpreter::blezl},
+    {31, ee_interpreter::sq},
     {32, ee_interpreter::lb},
     {43, ee_interpreter::sw},
     {63, ee_interpreter::sd},
@@ -48,6 +49,8 @@ static ee_op_template table0[] =
     {24, ee_interpreter::mult},
     {27, ee_interpreter::divu},
     {37, ee_interpreter::or_ee},
+    {42, ee_interpreter::slt},
+    {43, ee_interpreter::sltu},
     {45, ee_interpreter::daddu},
 };
 

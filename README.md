@@ -1,16 +1,16 @@
 Emotionless
 ===========
 
-Emotionless is a PS2 emulator with similar ideals to Dolphin.
+Emotionless is a PS2 emulator with the intent to have clean, readable code that is both
+portable and scalable, using Dolphin as an example of how to do this.
 
-It is very incomplete, though, so even though PCSX2 may be incompatible with some of your games,
-try that first, then Play!, then hpsx64, and then MAYBE in a few months, Emotionless.
+Currently, fixing the prime PS2 emulator would require a ridiculous amount of work.
+If we're going to run on as many platforms as possible, it should be programmed from the ground up.
 
-I originally had something here where I was trying to be inspirational and shit. It obviously didn't work,
-and now lots of people think I hate PCSX2 and its developers. Let me repeat, I have nothing but respect for them.
-They're doing the best with what they have, and while they have made some stupid decisions (e.g. AVG bundle), I
-don't blame the hard-working programmers for this. However, let's face it, PCSX2's codebase is unmaintainable.
-It would be easier to start over than to try to continually fix PCSX2's code.
+While developers behind PCSX2, Play! and hpsx64 have admirable projects,
+I'm looking more towards creating something that to preserve the PS2 for the generations to come,
+with well documented, easy to read, and clean code, hopefully the PS2 emulation scene
+will benefit greatly from this project.
 
 Tasks
 ================

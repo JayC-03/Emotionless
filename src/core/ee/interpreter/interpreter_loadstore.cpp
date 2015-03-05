@@ -20,3 +20,8 @@ void ee_interpreter::sd(ee_inst inst)
 {
     EE::Write64(rGPR[inst.RS].ul[0] + (s32)inst.SIMM_16, rGPR[inst.RT].ud[0]);
 }
+
+void ee_interpreter::sq(ee_inst inst)
+{
+    EE::Write128(rGPR[inst.RS].ul[0] + (s32)inst.SIMM_16, rGPR[inst.RT]);
+}

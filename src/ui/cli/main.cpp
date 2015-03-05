@@ -1,6 +1,6 @@
 #include "core/main.h"
 
-int main()
+int main(int ac, char** av)
 {
-    main_loop();
+    main_loop(ac,av);
 }

@@ -35,6 +35,8 @@ public:
     static void beq(ee_inst inst);
     static void bnel(ee_inst inst);
     static void beql(ee_inst inst);
+    static void slt(ee_inst inst);
+    static void sltu(ee_inst inst);
     static void slti(ee_inst inst);
     static void sltiu(ee_inst inst);
     static void ori(ee_inst inst);
@@ -51,6 +53,7 @@ public:
     static void lui(ee_inst inst);
     static void sw(ee_inst inst);
     static void sd(ee_inst inst);
+    static void sq(ee_inst inst);
     static void mfhi(ee_inst inst);
     static void mflo(ee_inst inst);
     static void tlbwi(ee_inst inst);
