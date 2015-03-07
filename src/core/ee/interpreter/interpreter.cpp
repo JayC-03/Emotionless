@@ -8,6 +8,8 @@ std::function<void(ee_inst)> ee_interpreter::op_table0[64];
 std::function<void(ee_inst)> ee_interpreter::op_table1[32];
 std::function<void(ee_inst)> ee_interpreter::op_table16[32];
 std::function<void(ee_inst)> ee_interpreter::op_table16_16[64];
+std::function<void(ee_inst)> ee_interpreter::op_table28[64];
+std::function<void(ee_inst)> ee_interpreter::op_table28_40[32];
 
 void ee_interpreter::init()
 {
@@ -91,4 +93,14 @@ void ee_interpreter::run_table16(ee_inst inst)
 void ee_interpreter::run_table16_16(ee_inst inst)
 {
     op_table16_16[inst.funct](inst);
+}
+
+void ee_interpreter::run_table28(ee_inst inst)
+{
+    op_table28[inst.funct](inst);
+}
+
+void ee_interpreter::run_table28_40(ee_inst inst)
+{
+    op_table28_40[inst.SA](inst);
 }

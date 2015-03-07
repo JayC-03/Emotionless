@@ -31,9 +31,11 @@ static ee_op_template primary_table[] =
     {20, ee_interpreter::beql},
     {21, ee_interpreter::bnel},
     {22, ee_interpreter::blezl},
+	{28, ee_interpreter::run_table28},
     {31, ee_interpreter::sq},
     {32, ee_interpreter::lb},
     {35, ee_interpreter::lw},
+    {40, ee_interpreter::sb},
     {43, ee_interpreter::sw},
     {55, ee_interpreter::ld},
     {63, ee_interpreter::sd},
@@ -73,6 +75,16 @@ static ee_op_template table16_16[] =
     {2, ee_interpreter::tlbwi},
 };
 
+static ee_op_template table28[] =
+{
+    {40, ee_interpreter::run_table28_40},
+};
+
+static ee_op_template table28_40[] =
+{
+    {16, ee_interpreter::padduw},
+};
+
 void init_tables()
 {
     for(int i = 0; i < 64; i++)
@@ -100,6 +112,16 @@ void init_tables()
         ee_interpreter::op_table16_16[i] = ee_interpreter::unknown;
     }
 
+	for(int i = 0; i < 64; i++)
+    {
+        ee_interpreter::op_table28[i] = ee_interpreter::unknown;
+    }
+
+	for(int i = 0; i < 32; i++)
+    {
+        ee_interpreter::op_table28_40[i] = ee_interpreter::unknown;
+    }
+
     for(auto& tbl_op : primary_table)
     {
         ee_interpreter::op_table[tbl_op.opcode] = tbl_op.inst;
@@ -123,6 +145,16 @@ void init_tables()
     for(auto& tbl_op : table16_16)
     {
         ee_interpreter::op_table16_16[tbl_op.opcode] = tbl_op.inst;
+    }
+
+	for(auto& tbl_op : table28)
+    {
+        ee_interpreter::op_table28[tbl_op.opcode] = tbl_op.inst;
+    }
+
+	for(auto& tbl_op : table28_40)
+    {
+        ee_interpreter::op_table28_40[tbl_op.opcode] = tbl_op.inst;
     }
 }
 }

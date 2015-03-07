@@ -17,6 +17,8 @@ public:
     static std::function<void(ee_inst)> op_table1[32];
     static std::function<void(ee_inst)> op_table16[32];
     static std::function<void(ee_inst)> op_table16_16[64];
+	static std::function<void(ee_inst)> op_table28[64];
+	static std::function<void(ee_inst)> op_table28_40[32];
 
     static void unknown(ee_inst inst);
 
@@ -24,6 +26,8 @@ public:
     static void run_table1(ee_inst inst);
     static void run_table16(ee_inst inst);
     static void run_table16_16(ee_inst inst);
+	static void run_table28(ee_inst inst);
+	static void run_table28_40(ee_inst inst);
 
     static void sll(ee_inst inst);
     static void srl(ee_inst inst);
@@ -54,10 +58,12 @@ public:
     static void lw(ee_inst inst);
     static void ld(ee_inst inst);
     static void lui(ee_inst inst);
+    static void sb(ee_inst inst);
     static void sw(ee_inst inst);
     static void sd(ee_inst inst);
     static void sq(ee_inst inst);
     static void mfhi(ee_inst inst);
     static void mflo(ee_inst inst);
     static void tlbwi(ee_inst inst);
+	static void padduw(ee_inst inst);
 };

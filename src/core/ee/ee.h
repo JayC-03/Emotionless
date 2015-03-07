@@ -59,6 +59,7 @@ u8 Read8(u32 virt_addr);
 u32 Read32(u32 virt_addr);
 u64 Read64(u32 virt_addr);
 
+void Write8(u32 virt_addr, u8 data);
 void Write32(u32 virt_addr, u32 data);
 void Write64(u32 virt_addr, u64 data);
 void Write128(u32 virt_addr, ee_reg data);

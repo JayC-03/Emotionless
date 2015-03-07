@@ -40,6 +40,15 @@ u64 Read64(u32 phys_addr)
     return ((u64)Read32(phys_addr + 4) << 32) | Read32(phys_addr);
 }
 
+void Write8(u32 phys_addr, u8 data)
+{
+    log_print("Memory", "Write8 at physical address " + to_string(phys_addr), log_level::warning);
+    u32 temp = Read32(phys_addr);
+    temp &= 0xFF << ((phys_addr & 3) << 8);
+    temp |= data << ((phys_addr & 3) << 8);
+    Write32(phys_addr,temp);
+}
+
 void Write32(u32 phys_addr, u32 data)
 {
     //RAM

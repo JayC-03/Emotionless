@@ -21,6 +21,11 @@ void ee_interpreter::ld(ee_inst inst)
     rGPR[inst.RT].ud[0] = EE::Read64(rGPR[inst.RS].ul[0] + (s32)inst.SIMM_16);
 }
 
+void ee_interpreter::sb(ee_inst inst)
+{
+    EE::Write8(rGPR[inst.RS].ul[0] + (s32)inst.SIMM_16, rGPR[inst.RT].uc[0]);
+}
+
 void ee_interpreter::sw(ee_inst inst)
 {
     EE::Write32(rGPR[inst.RS].ul[0] + (s32)inst.SIMM_16, rGPR[inst.RT].ul[0]);
