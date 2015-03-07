@@ -2,7 +2,6 @@
 
 #include <QAbstractListModel>
 #include <QDockWidget>
-#include <string>
 
 #include "ui_disassembler.h"
 
@@ -24,11 +23,12 @@ public:
 
 	QModelIndex IndexFromAbsoluteAddress(unsigned int address) const;
 	
-	std::string disassemble(u32 instr);
+	QString disassemble(u32 addr, u32 instr);
 
 public slots:
 	void ParseFromAddress(unsigned int address);
 	void OnSelectionChanged(const QModelIndex&);
+	void OnSetOrUnsetBreakpoint();
 	void SetNextInstruction(unsigned int address);
 
 private:

@@ -1,7 +1,10 @@
 #include "debugger.h"
 
+#include "common/breakpoint.h"
+
 #include "core/memmap.h"
 #include "core/ee/ee.h"
+#include "core/ee/ee_inst.h"
 #include "core/main.h"
 
 DisassemblerModel::DisassemblerModel(QObject* parent) : QAbstractListModel(parent), base_address(0), code_size(0), program_counter(0), selection(QModelIndex())
@@ -26,7 +29,7 @@ QVariant DisassemblerModel::data(const QModelIndex& index, int role) const
 		{
 			u32 address = base_address + index.row() * 4;
 			u32 instr = Memory::Read32(address);
-			std::string disasm = disassemble(instr);
+			QString disasm = disassemble(address, instr);
 
 			switch(index.column())
 			{
@@ -42,7 +45,7 @@ QVariant DisassemblerModel::data(const QModelIndex& index, int role) const
 				}
 				case 2:
 				{
-					return QString::fromStdString(disasm);
+					return disasm;
 					break;
 				}
 			}
@@ -52,6 +55,11 @@ QVariant DisassemblerModel::data(const QModelIndex& index, int role) const
 		{
 			u32 address = base_address + index.row() * 4;
 			if(address == program_counter) return QBrush(QColor(0xC0, 0xC0, 0xFF));
+			else
+			{
+				if(address & 4) return QBrush(QColor(0x70,0x70,0x70));
+				else return QBrush(QColor(0x00,0x00,0x00));
+			}
 			break;
 		}
 	}
@@ -114,8 +122,122 @@ void DisassemblerModel::SetNextInstruction(unsigned int address)
 	emit dataChanged(prev_index, prev_index);
 }
 
-std::string DisassemblerModel::disassemble(u32 instr)
+void DisassemblerModel::OnSetOrUnsetBreakpoint()
 {
+	if (!selection.isValid()) return;
+
+	unsigned int address = base_address + selection.row() * 4;
+
+	bool status = false; //false for nothing, true for erased
+
+	for(int i = 0; i < breakpoints.size(); i++)
+	{
+		if(breakpoints[i].addr == address)
+		{
+			breakpoints.erase(breakpoints.begin() + i);
+			status = true;
+		}
+	}
+
+	if(!status)
+	{
+		breakpoint_t temp = {address, true};
+		breakpoints.push_back(temp);
+	}
+
+	emit dataChanged(selection, selection);
+}
+
+QString DisassemblerModel::disassemble(u32 addr, u32 instr)
+{
+	ee_inst instr_code;
+	instr_code.hex = instr;
+
+	switch(instr_code.opcd)
+	{
+		case 0:
+		{
+			switch(instr_code.funct)
+			{
+				case 0:
+				{
+					return QString("sll r%1, r%2, %3").arg((uint)instr_code.RD,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SA,2,10,QLatin1Char('0'));
+					break;
+				}
+				case 43:
+				{
+					return QString("ori r%1, r%2, r%3").arg((uint)instr_code.RD,2,10,QLatin1Char('0')).arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0'));
+					break;
+				}
+			}
+			break;
+		}
+		case 2:
+		{
+			u32 jmp_addr = ((addr + 4) & 0xf0000000) | (instr_code.instr_index << 2);
+			return QString("j %1").arg((uint)jmp_addr,8,16,QLatin1Char('0'));
+			break;
+		}
+		case 3:
+		{
+			u32 jmp_addr = ((addr + 4) & 0xf0000000) | (instr_code.instr_index << 2);
+			return QString("jal %1").arg((uint)jmp_addr,8,16,QLatin1Char('0'));
+			break;
+		}
+		case 4:
+		{
+			u32 branch_addr = (addr + 4) + (s32)(instr_code.SIMM_16 << 2);
+			return QString("beq r%1, r%2, %3").arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)branch_addr,8,16,QLatin1Char('0'));
+			break;
+		}
+		case 5:
+		{
+			u32 branch_addr = (addr + 4) + (s32)(instr_code.SIMM_16 << 2);
+			return QString("bne r%1, r%2, %3").arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)branch_addr,8,16,QLatin1Char('0'));
+			break;
+		}
+		case 9:
+		{
+			return QString("addiu r%1, r%2, %3").arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0'));
+			break;
+		}
+		case 10:
+		{
+			return QString("slti r%1, r%2, %3").arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0'));
+			break;
+		}
+		case 11:
+		{
+			return QString("sltiu r%1, r%2, %3").arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0'));
+			break;
+		}
+		case 12:
+		{
+			return QString("daddi r%1, r%2, %3").arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0'));
+			break;
+		}
+		case 13:
+		{
+			return QString("ori r%1, r%2, %3").arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.RS,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0'));
+			break;
+		}
+		case 15:
+		{
+			return QString("lui r%1, %2").arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0'));
+			break;
+		}
+		case 31:
+		{
+			return QString("sq r%1, %2(r%3)").arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0')).arg((uint)instr_code.RS,2,10,QLatin1Char('0'));
+			break;
+		}
+		case 43:
+		{
+			return QString("sw r%1, %2(r%3)").arg((uint)instr_code.RT,2,10,QLatin1Char('0')).arg((uint)instr_code.SIMM_16,4,16,QLatin1Char('0')).arg((uint)instr_code.RS,2,10,QLatin1Char('0'));
+			break;
+		}
+	}
+
 	return "Unknown";
 }
 
@@ -130,6 +252,8 @@ DebuggerWidget::DebuggerWidget(QWidget* parent) : QDockWidget(parent), base_addr
 
 	model = new DisassemblerModel(this);
 	disasm_ui.treeView->setModel(model);
+
+	connect(disasm_ui.button_breakpoint, SIGNAL(clicked()), model, SLOT(OnSetOrUnsetBreakpoint()));
 
 	connect(disasm_ui.treeView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)), model, SLOT(OnSelectionChanged(const QModelIndex&)));
 }
