@@ -30,21 +30,16 @@ void ee_interpreter::single_step()
 {
     static ee_inst inst_code;
 
-	for(auto breakpoint : breakpoints)
-	{
-		if(breakpoint.enabled && breakpoint.addr == PC)
-		{
-			main_break = true;
-			main_break_steps = 0;
-			return;
-		}
-	}
+    log_print("EE Interpreter", "PC: " + to_string(PC), log_level::verbose);
 
-    //log_print("EE Interpreter", "PC: " + to_string(PC), log_level::verbose);
+	for(int i = 0; i < 32; i++)
+	{	
+		log_print("EE Interpreter", "R" + to_string(i) + ": " + to_string(rGPR[i].ud[1]) + " " + to_string(rGPR[i].ud[0]), log_level::verbose);
+	}
 
     inst_code.hex = EE::Read32(PC);
 
-    /*log_print("EE Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::verbose);
+    log_print("EE Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::verbose);
 
     log_print("EE Interpreter", "Instruction RS: " + to_string(inst_code.RS), log_level::verbose);
 
@@ -52,7 +47,7 @@ void ee_interpreter::single_step()
 
     log_print("EE Interpreter", "Instruction RD: " + to_string(inst_code.RD), log_level::verbose);
 
-    log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);*/
+    log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);
 
     if(EE::ee_state.branch)
     {

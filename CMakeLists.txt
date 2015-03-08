@@ -14,6 +14,7 @@ option(ENABLE_QT "Enable the Qt5 frontend" ON)
 if(ENABLE_QT)
 	find_package(Qt5 COMPONENTS Widgets)
 	set(QT_LIBS Qt5::Widgets)
+	add_definitions(-DUSE_QT)
 endif()
 
 add_definitions(-std=gnu++0x)
