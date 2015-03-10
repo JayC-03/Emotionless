@@ -5,6 +5,7 @@ ee/ee.cpp
 ee/interpreter/interpreter.cpp
 ee/interpreter/interpreter_branch.cpp
 ee/interpreter/interpreter_cop0.cpp
+ee/interpreter/interpreter_cop1.cpp
 ee/interpreter/interpreter_integer.cpp
 ee/interpreter/interpreter_loadstore.cpp
 ee/interpreter/interpreter_mmi.cpp

@@ -6,6 +6,7 @@ namespace Memory
 {
 extern u32 ram[0x800000]; //32MB
 extern u32 bios[0x100000]; //4MB
+extern u32 spr[0x1000];
 
 u8 Read8(u32 phys_addr);
 u32 Read32(u32 phys_addr);

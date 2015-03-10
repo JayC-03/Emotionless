@@ -36,10 +36,8 @@ struct ee_state_t
     u32 npc;
     u32 condition;
     u32 code;
-    u32 branch;
-    u32 branch_likely;
-    s32 branch_offset;
     u32 jump;
+	u32 jump_likely;
     u32 jump_target;
 };
 
@@ -48,7 +46,7 @@ extern ee_state_t ee_state;
 #define PC EE::ee_state.pc
 #define NPC EE::ee_state.npc
 #define rGPR EE::ee_state.gpr
-#define rFPR EE::ee_state.gpr
+#define rFPR EE::ee_state.cop1r
 #define rLO EE::ee_state.lo
 #define rHI EE::ee_state.hi
 #define rCOP0 EE::ee_state.cop0r

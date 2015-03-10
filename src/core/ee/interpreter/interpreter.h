@@ -31,14 +31,18 @@ public:
 
     static void sll(ee_inst inst);
     static void srl(ee_inst inst);
+	static void sra(ee_inst inst);
     static void sync(ee_inst inst);
     static void mfc0(ee_inst inst);
     static void mtc0(ee_inst inst);
-    static void blezl(ee_inst inst);
+	static void swc1(ee_inst inst);
     static void bne(ee_inst inst);
     static void beq(ee_inst inst);
+	static void bgez(ee_inst inst);
+	static void blez(ee_inst inst);
     static void bnel(ee_inst inst);
     static void beql(ee_inst inst);
+	static void blezl(ee_inst inst);
     static void slt(ee_inst inst);
     static void sltu(ee_inst inst);
     static void slti(ee_inst inst);
@@ -48,6 +52,7 @@ public:
     static void or_ee(ee_inst inst);
     static void mult(ee_inst inst);
     static void divu(ee_inst inst);
+	static void addu(ee_inst inst);
     static void addiu(ee_inst inst);
     static void daddu(ee_inst inst);
     static void daddi(ee_inst inst);
@@ -55,6 +60,7 @@ public:
     static void jalr(ee_inst inst);
     static void jal(ee_inst inst);
     static void lb(ee_inst inst);
+	static void lbu(ee_inst inst);
     static void lw(ee_inst inst);
     static void ld(ee_inst inst);
     static void lui(ee_inst inst);

@@ -11,6 +11,11 @@ void ee_interpreter::srl(ee_inst inst)
     rGPR[inst.RD].ud[0] = (s64)(s32)(rGPR[inst.RT].ul[0] >> inst.SA);
 }
 
+void ee_interpreter::sra(ee_inst inst)
+{
+    rGPR[inst.RD].ud[0] = (s64)(s32)((s32)rGPR[inst.RT].ul[0] >> inst.SA);
+}
+
 void ee_interpreter::slt(ee_inst inst)
 {
     rGPR[inst.RD].ud[1] = 0;
@@ -73,9 +78,14 @@ void ee_interpreter::divu(ee_inst inst)
     rHI.ud[0] = (s64)(s32)remainder;
 }
 
+void ee_interpreter::addu(ee_inst inst)
+{
+    rGPR[inst.RD].ud[0] = (s64)(s32)(u32)(rGPR[inst.RS].ud[0] + rGPR[inst.RT].ud[0]);
+}
+
 void ee_interpreter::addiu(ee_inst inst)
 {
-    rGPR[inst.RT].ud[0] = (s64)(s32)(u32)(rGPR[inst.RS].ud[0] + (u64)(s64)inst.SIMM_16);
+    rGPR[inst.RT].ud[0] = (s64)(rGPR[inst.RS].sl[0] + (s32)inst.SIMM_16);
 }
 
 void ee_interpreter::daddu(ee_inst inst)

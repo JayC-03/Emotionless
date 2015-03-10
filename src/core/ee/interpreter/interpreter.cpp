@@ -5,7 +5,6 @@
 #include "core/main.h"
 
 #include "common/log.h"
-#include "common/breakpoint.h"
 
 std::function<void(ee_inst)> ee_interpreter::op_table[64];
 std::function<void(ee_inst)> ee_interpreter::op_table0[64];
@@ -49,32 +48,26 @@ void ee_interpreter::single_step()
 
     log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);
 
-    if(EE::ee_state.branch)
-    {
-        EE::ee_state.branch = 0;
-        if(EE::ee_state.branch_likely)
-        {
-            EE::ee_state.branch_likely = 0;
-            if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
-            else
-            {
-                PC += 4;
-                return;
-            }
-        }
-        else if(EE::ee_state.condition) PC += EE::ee_state.branch_offset;
-    }
+	bool branch = false;
 
-    else if(EE::ee_state.jump)
+	if(EE::ee_state.jump)
     {
         EE::ee_state.jump = 0;
-        PC = EE::ee_state.jump_target;
-        return;
+		if(EE::ee_state.jump_likely)
+		{
+			if(EE::ee_state.condition) branch = true;
+			else PC += 4;
+		}
+		else
+		{
+			if(EE::ee_state.condition) branch = true;
+		}
     }
 
     op_table[inst_code.opcd](inst_code);
 
-    PC += 4;
+	if(branch) PC = EE::ee_state.jump_target;
+	else PC += 4;
 }
 
 void ee_interpreter::unknown(ee_inst inst)

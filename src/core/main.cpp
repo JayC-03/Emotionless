@@ -11,7 +11,7 @@ void main_loop(std::string fn)
     EE::interpreter->init();
 
 #ifndef USE_BIOS_HLE
-    FILE* bios = fopen("bios.bin","rb");
+    FILE* bios = fopen(fn.c_str(),"rb");
     fread(Memory::bios,1,0x400000,bios);
     fclose(bios);
 #else
@@ -20,7 +20,7 @@ void main_loop(std::string fn)
     elf.load(elffp);
 #endif
 
-	for(int i = 0; i < 4000; i++)
+	for(int i = 0; i < 8000; i++)
 	{
 		EE::interpreter->single_step();
 	}

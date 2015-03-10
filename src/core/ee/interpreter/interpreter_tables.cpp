@@ -21,6 +21,7 @@ static ee_op_template primary_table[] =
     {3,  ee_interpreter::jal},
     {4,  ee_interpreter::beq},
     {5,  ee_interpreter::bne},
+	{6,  ee_interpreter::blez},
     {9,  ee_interpreter::addiu},
     {10, ee_interpreter::slti},
     {11, ee_interpreter::sltiu},
@@ -35,9 +36,11 @@ static ee_op_template primary_table[] =
     {31, ee_interpreter::sq},
     {32, ee_interpreter::lb},
     {35, ee_interpreter::lw},
+	{36, ee_interpreter::lbu},
     {40, ee_interpreter::sb},
     {43, ee_interpreter::sw},
     {55, ee_interpreter::ld},
+	{57, ee_interpreter::swc1},
     {63, ee_interpreter::sd},
 };
 
@@ -45,6 +48,7 @@ static ee_op_template table0[] =
 {
     {0,  ee_interpreter::sll},
     {2,  ee_interpreter::srl},
+	{3,  ee_interpreter::sra},
     {8,  ee_interpreter::jr},
     {9,  ee_interpreter::jalr},
     {15, ee_interpreter::sync},
@@ -52,6 +56,7 @@ static ee_op_template table0[] =
     {18, ee_interpreter::mflo},
     {24, ee_interpreter::mult},
     {27, ee_interpreter::divu},
+	{33, ee_interpreter::addu},
     {36, ee_interpreter::and_ee},
     {37, ee_interpreter::or_ee},
     {42, ee_interpreter::slt},
@@ -61,6 +66,7 @@ static ee_op_template table0[] =
 
 static ee_op_template table1[] =
 {
+	{1,  ee_interpreter::bgez},
 };
 
 static ee_op_template table16[] =
