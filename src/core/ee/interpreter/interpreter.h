@@ -22,6 +22,8 @@ public:
 
     static void unknown(ee_inst inst);
 
+	static void exception();
+
     static void run_table0(ee_inst inst);
     static void run_table1(ee_inst inst);
     static void run_table16(ee_inst inst);
@@ -29,6 +31,8 @@ public:
 	static void run_table28(ee_inst inst);
 	static void run_table28_40(ee_inst inst);
 
+	static void syscall(ee_inst inst);
+	static void break_ee(ee_inst inst);
     static void sll(ee_inst inst);
     static void srl(ee_inst inst);
 	static void sra(ee_inst inst);
@@ -47,11 +51,13 @@ public:
     static void sltu(ee_inst inst);
     static void slti(ee_inst inst);
     static void sltiu(ee_inst inst);
+	static void andi(ee_inst inst);
     static void and_ee(ee_inst inst);
     static void ori(ee_inst inst);
     static void or_ee(ee_inst inst);
     static void mult(ee_inst inst);
     static void divu(ee_inst inst);
+	static void addi(ee_inst inst);
 	static void addu(ee_inst inst);
     static void addiu(ee_inst inst);
     static void daddu(ee_inst inst);

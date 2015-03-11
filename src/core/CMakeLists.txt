@@ -10,6 +10,13 @@ ee/interpreter/interpreter_integer.cpp
 ee/interpreter/interpreter_loadstore.cpp
 ee/interpreter/interpreter_mmi.cpp
 ee/interpreter/interpreter_tables.cpp
+iop/iop.cpp
+iop/interpreter/interpreter.cpp
+iop/interpreter/interpreter_branch.cpp
+iop/interpreter/interpreter_cop0.cpp
+iop/interpreter/interpreter_integer.cpp
+iop/interpreter/interpreter_loadstore.cpp
+iop/interpreter/interpreter_tables.cpp
 hw/dmac.cpp
 hle/elf.cpp
 )

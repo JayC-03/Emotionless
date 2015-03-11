@@ -4,7 +4,7 @@
 void ee_interpreter::blezl(ee_inst inst)
 {
     EE::ee_state.jump = 1;
-    EE::ee_state.condition = rGPR[inst.RS].ul[0] <= 0;
+    EE::ee_state.condition = rGPR[inst.RS].sd[0] <= 0;
     EE::ee_state.jump_likely = 1;
     EE::ee_state.jump_target = (PC + 4) + (((s32)inst.SIMM_16) << 2);
 }
@@ -12,7 +12,7 @@ void ee_interpreter::blezl(ee_inst inst)
 void ee_interpreter::bgez(ee_inst inst)
 {
     EE::ee_state.jump = 1;
-    EE::ee_state.condition = rGPR[inst.RS].ul[0] >= 0;
+    EE::ee_state.condition = rGPR[inst.RS].sd[0] >= 0;
     EE::ee_state.jump_likely = 0;
     EE::ee_state.jump_target = (PC + 4) + (((s32)inst.SIMM_16) << 2);
 }
@@ -20,7 +20,7 @@ void ee_interpreter::bgez(ee_inst inst)
 void ee_interpreter::blez(ee_inst inst)
 {
     EE::ee_state.jump = 1;
-    EE::ee_state.condition = rGPR[inst.RS].ul[0] <= 0;
+    EE::ee_state.condition = rGPR[inst.RS].sd[0] <= 0;
     EE::ee_state.jump_likely = 0;
     EE::ee_state.jump_target = (PC + 4) + (((s32)inst.SIMM_16) << 2);
 }
@@ -33,7 +33,7 @@ void ee_interpreter::bne(ee_inst inst)
     EE::ee_state.jump_target = (PC + 4) + (((s32)inst.SIMM_16) << 2);
 }
 
-void ee_interpreter::beq(ee_inst inst)
+                                    void ee_interpreter::beq(ee_inst inst)
 {
     EE::ee_state.jump = 1;
     EE::ee_state.condition = rGPR[inst.RS].ud[0] == rGPR[inst.RT].ud[0];

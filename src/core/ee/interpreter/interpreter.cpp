@@ -17,7 +17,11 @@ std::function<void(ee_inst)> ee_interpreter::op_table28_40[32];
 void ee_interpreter::init()
 {
     PC = 0xbfc00000;
+	rCOP0[EE::COP0_regs::Cause] = 0;
+	rCOP0[EE::COP0_regs::Status] = 0x400000;
     rCOP0[15] = 0x00002e20; //TODO: Value taken from PCSX2. VERIFY
+	EE::ee_state.jump = 0;
+	EE::ee_state.branch = 0;
     EE::interpreter_tables::init_tables();
 }
 
@@ -48,31 +52,45 @@ void ee_interpreter::single_step()
 
     log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);
 
-	bool branch = false;
-
 	if(EE::ee_state.jump)
     {
         EE::ee_state.jump = 0;
 		if(EE::ee_state.jump_likely)
 		{
-			if(EE::ee_state.condition) branch = true;
+			if(EE::ee_state.condition) EE::ee_state.branch = 1;
 			else PC += 4;
 		}
 		else
 		{
-			if(EE::ee_state.condition) branch = true;
+			if(EE::ee_state.condition) EE::ee_state.branch = 1;
 		}
     }
 
     op_table[inst_code.opcd](inst_code);
 
-	if(branch) PC = EE::ee_state.jump_target;
+	if(EE::ee_state.branch) PC = EE::ee_state.jump_target;
 	else PC += 4;
+
+	EE::ee_state.branch = 0;
 }
 
 void ee_interpreter::unknown(ee_inst inst)
 {
     log_print("EE Interpreter", "Unknown instruction " + to_string(inst.hex) + " at address " + to_string(PC), log_level::error);
+}
+
+void ee_interpreter::exception()
+{
+    log_print("EE Interpreter", "Exception at address " + to_string(PC), log_level::debug);
+	rCOP0[EE::COP0_regs::EPC] = PC;
+
+	//TODO: Fully implement this!
+
+	//Checking BEV
+	if(rCOP0[EE::COP0_regs::Status] & 0x400000) PC = 0xbfc0037c;
+	else PC = 0x8000017c;
+
+	EE::ee_state.branch = 0;
 }
 
 void ee_interpreter::run_table0(ee_inst inst)

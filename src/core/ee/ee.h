@@ -1,5 +1,13 @@
 #pragma once
 
+#undef PC
+#undef NPC
+#undef rGPR
+#undef rFPR
+#undef rLO
+#undef rHI
+#undef rCOP0
+
 #include "common/common_types.h"
 #include "common/log.h"
 #include "core/ee/interpreter/interpreter.h"
@@ -39,6 +47,16 @@ struct ee_state_t
     u32 jump;
 	u32 jump_likely;
     u32 jump_target;
+
+	u32 branch;
+};
+
+enum COP0_regs
+{
+	BadVAddr = 8,
+	Status = 12,
+	Cause = 13,
+	EPC = 14,
 };
 
 extern ee_state_t ee_state;

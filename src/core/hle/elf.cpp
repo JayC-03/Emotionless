@@ -21,7 +21,7 @@ void ELF::load(FILE* fp)
   for(int i = 0; i < prog_hdrs.size(); i++)
   {
     fseek(fp,prog_hdrs[i].offset,SEEK_SET);
-    fread(Memory::ram + (prog_hdrs[i].paddr >> 2), 1, prog_hdrs[i].file_size, fp);
+    fread(MemoryEE::ram + (prog_hdrs[i].paddr >> 2), 1, prog_hdrs[i].file_size, fp);
   }
   
   EE::ee_state.pc = hdr.entry_point;
