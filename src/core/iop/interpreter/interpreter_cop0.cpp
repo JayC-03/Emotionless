@@ -19,6 +19,6 @@ void iop_interpreter::tlbwi(iop_inst inst)
 void iop_interpreter::break_iop(iop_inst inst)
 {
     rCOP0[IOP::COP0_regs::Cause] = 0x24;
-	rCOP0[IOP::COP0_regs::Status] |= 0x2;
-	iop_interpreter::exception();
+    rCOP0[IOP::COP0_regs::Status] |= 0x2;
+    iop_interpreter::exception();
 }

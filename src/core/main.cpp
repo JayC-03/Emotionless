@@ -8,10 +8,10 @@
 void main_loop(std::string fn, std::string fn2)
 {
     EE::interpreter = new ee_interpreter();
-	IOP::interpreter = new iop_interpreter();
+    IOP::interpreter = new iop_interpreter();
 
     EE::interpreter->init();
-	IOP::interpreter->init();
+    IOP::interpreter->init();
 
     FILE* bios = fopen(fn.c_str(),"rb");
     fread(MemoryEE::bios,1,0x400000,bios);
@@ -22,14 +22,14 @@ void main_loop(std::string fn, std::string fn2)
     elf.load(elffp);
 #endif
 
-	for(int i = 0; i < 8000; i++)
-	{
-		EE::interpreter->single_step();
+    for(int i = 0; i < 8000; i++)
+    {
+        EE::interpreter->single_step();
 #ifndef USE_BIOS_HLE
-		if((i & 3) == 0) IOP::interpreter->single_step();
+        if((i & 3) == 0) IOP::interpreter->single_step();
 #endif
-	}
+    }
 
-	delete EE::interpreter;
-	delete IOP::interpreter;
+    delete EE::interpreter;
+    delete IOP::interpreter;
 }

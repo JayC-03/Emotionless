@@ -21,12 +21,12 @@ static iop_op_template primary_table[] =
     {3,  iop_interpreter::jal},
     {4,  iop_interpreter::beq},
     {5,  iop_interpreter::bne},
-	{6,  iop_interpreter::blez},
-	{8,  iop_interpreter::addi},
+    {6,  iop_interpreter::blez},
+    {8,  iop_interpreter::addi},
     {9,  iop_interpreter::addiu},
     {10, iop_interpreter::slti},
     {11, iop_interpreter::sltiu},
-	{12, iop_interpreter::andi},
+    {12, iop_interpreter::andi},
     {13, iop_interpreter::ori},
     {15, iop_interpreter::lui},
     {16, iop_interpreter::run_table16},
@@ -35,7 +35,7 @@ static iop_op_template primary_table[] =
     {22, iop_interpreter::blezl},
     {32, iop_interpreter::lb},
     {35, iop_interpreter::lw},
-	{36, iop_interpreter::lbu},
+    {36, iop_interpreter::lbu},
     {40, iop_interpreter::sb},
     {43, iop_interpreter::sw},
 };
@@ -44,12 +44,12 @@ static iop_op_template table0[] =
 {
     {0,  iop_interpreter::sll},
     {2,  iop_interpreter::srl},
-	{3,  iop_interpreter::sra},
+    {3,  iop_interpreter::sra},
     {8,  iop_interpreter::jr},
     {9,  iop_interpreter::jalr},
-	{13, iop_interpreter::break_iop},
+    {13, iop_interpreter::break_iop},
     {15, iop_interpreter::sync},
-	{33, iop_interpreter::addu},
+    {33, iop_interpreter::addu},
     {36, iop_interpreter::and_iop},
     {37, iop_interpreter::or_iop},
     {42, iop_interpreter::slt},
@@ -58,7 +58,7 @@ static iop_op_template table0[] =
 
 static iop_op_template table1[] =
 {
-	{1,  iop_interpreter::bgez},
+    {1,  iop_interpreter::bgez},
 };
 
 static iop_op_template table16[] =
@@ -94,7 +94,7 @@ void init_tables()
     {
         iop_interpreter::op_table16[i] = iop_interpreter::unknown;
     }
-    
+
     for(int i = 0; i < 64; i++)
     {
         iop_interpreter::op_table16_16[i] = iop_interpreter::unknown;
@@ -119,7 +119,7 @@ void init_tables()
     {
         iop_interpreter::op_table16[tbl_op.opcode] = tbl_op.inst;
     }
-    
+
     for(auto& tbl_op : table16_16)
     {
         iop_interpreter::op_table16_16[tbl_op.opcode] = tbl_op.inst;

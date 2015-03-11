@@ -19,13 +19,13 @@ void ee_interpreter::tlbwi(ee_inst inst)
 void ee_interpreter::break_ee(ee_inst inst)
 {
     rCOP0[EE::COP0_regs::Cause] = 0x24;
-	rCOP0[EE::COP0_regs::Status] |= 0x2;
-	ee_interpreter::exception();
+    rCOP0[EE::COP0_regs::Status] |= 0x2;
+    ee_interpreter::exception();
 }
 
 void ee_interpreter::syscall(ee_inst inst)
 {
     rCOP0[EE::COP0_regs::Cause] = 0x20;
-	rCOP0[EE::COP0_regs::Status] |= 0x2;
-	ee_interpreter::exception();
+    rCOP0[EE::COP0_regs::Status] |= 0x2;
+    ee_interpreter::exception();
 }

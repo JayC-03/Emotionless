@@ -14,9 +14,9 @@ u8 Read8(u32 phys_addr)
     u32 res = 0;
     //RAM
     if(phys_addr < 0x02000000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1fffffc) >> 2];
-	//Scratchpad RAM
+    //Scratchpad RAM
     else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000) res = spr[(phys_addr & 0x3ffc) >> 2];
-	//IOP RAM
+    //IOP RAM
     else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0x3ffffc) >> 2];
@@ -32,9 +32,9 @@ u16 Read16(u32 phys_addr)
     u32 res = 0;
     //RAM
     if(phys_addr < 0x02000000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1fffffc) >> 2];
-	//Scratchpad RAM
+    //Scratchpad RAM
     else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000) res = spr[(phys_addr & 0x3ffc) >> 2];
-	//IOP RAM
+    //IOP RAM
     else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0x3ffffc) >> 2];
@@ -50,9 +50,9 @@ u32 Read32(u32 phys_addr)
     u32 res = 0;
     //RAM
     if(phys_addr < 0x02000000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1fffffc) >> 2];
-	//Scratchpad RAM
+    //Scratchpad RAM
     else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000) res = spr[(phys_addr & 0x3ffc) >> 2];
-	//IOP RAM
+    //IOP RAM
     else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0xffffc) >> 2];
@@ -80,9 +80,9 @@ void Write32(u32 phys_addr, u32 data)
 {
     //RAM
     if(phys_addr >= 0x00000000 && phys_addr < 0x02000000) ram[(phys_addr & 0x1fffffc) >> 2] = data;
-	//Scratchpad RAM
+    //Scratchpad RAM
     else if(phys_addr >= 0x02000000 && phys_addr < 0x02004000) spr[(phys_addr & 0x3ffc) >> 2] = data;
-	//IOP RAM
+    //IOP RAM
     else if(phys_addr >= 0x1c000000 && phys_addr < 0x1c800000) MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2] = data;
     //Extended DMAC area
     if(phys_addr >= 0x1000F500 && phys_addr < 0x1000F600) DMAC::Write32(phys_addr, data);
@@ -106,7 +106,7 @@ u32 ram[0x80000];
 u8 Read8(u32 phys_addr)
 {
     u32 res = 0;
-	//RAM
+    //RAM
     if(phys_addr < 0x00200000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = MemoryEE::bios[(phys_addr & 0x3ffffc) >> 2];
