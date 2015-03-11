@@ -62,11 +62,14 @@ public:
     static void addiu(ee_inst inst);
     static void daddu(ee_inst inst);
     static void daddi(ee_inst inst);
+	static void subu(ee_inst inst);
     static void jr(ee_inst inst);
+	static void j(ee_inst inst);
     static void jalr(ee_inst inst);
     static void jal(ee_inst inst);
     static void lb(ee_inst inst);
 	static void lbu(ee_inst inst);
+	static void lhu(ee_inst inst);
     static void lw(ee_inst inst);
     static void ld(ee_inst inst);
     static void lui(ee_inst inst);
@@ -78,4 +81,5 @@ public:
     static void mflo(ee_inst inst);
     static void tlbwi(ee_inst inst);
 	static void padduw(ee_inst inst);
+	static void movn(ee_inst inst);
 };

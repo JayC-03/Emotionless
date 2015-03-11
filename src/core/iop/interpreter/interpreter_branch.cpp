@@ -52,7 +52,7 @@ void iop_interpreter::bnel(iop_inst inst)
 void iop_interpreter::beql(iop_inst inst)
 {
     IOP::iop_state.jump = 1;
-    IOP::iop_state.condition = rGPR[inst.RS] != rGPR[inst.RT];
+    IOP::iop_state.condition = rGPR[inst.RS] == rGPR[inst.RT];
     IOP::iop_state.jump_likely = 1;
     IOP::iop_state.jump_target = (PC + 4) + (((s32)inst.SIMM_16) << 2);
 }

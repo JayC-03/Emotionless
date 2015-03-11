@@ -122,3 +122,13 @@ void ee_interpreter::sync(ee_inst inst)
 {
     //TODO: This doesn't need to be implemented yet.
 }
+
+void ee_interpreter::subu(ee_inst inst)
+{
+    rGPR[inst.RD].ud[0] = (s64)(s32)(u32)(rGPR[inst.RS].ud[0] - rGPR[inst.RT].ud[0]);
+}
+
+void ee_interpreter::movn(ee_inst inst)
+{
+    if(rGPR[inst.RT].ud[0] != 0) rGPR[inst.RD].ud[0] = rGPR[inst.RS].ud[0];
+}

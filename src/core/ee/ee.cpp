@@ -21,6 +21,11 @@ u8 Read8(u32 virt_addr)
     return MemoryEE::Read8(TranslateAddress(virt_addr));
 }
 
+u16 Read16(u32 virt_addr)
+{
+    return MemoryEE::Read16(TranslateAddress(virt_addr));
+}
+
 u32 Read32(u32 virt_addr)
 {
     return MemoryEE::Read32(TranslateAddress(virt_addr));

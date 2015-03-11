@@ -54,6 +54,7 @@ struct ee_state_t
 enum COP0_regs
 {
 	BadVAddr = 8,
+	Count = 9,
 	Status = 12,
 	Cause = 13,
 	EPC = 14,
@@ -72,6 +73,7 @@ extern ee_state_t ee_state;
 u32 TranslateAddress(u32 virt_addr);
 
 u8 Read8(u32 virt_addr);
+u16 Read16(u32 virt_addr);
 u32 Read32(u32 virt_addr);
 u64 Read64(u32 virt_addr);
 
