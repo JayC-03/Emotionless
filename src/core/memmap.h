@@ -13,6 +13,7 @@ u16 Read16(u32 phys_addr);
 u32 Read32(u32 phys_addr);
 u64 Read64(u32 phys_addr);
 void Write8(u32 phys_addr, u8 data);
+void Write16(u32 phys_addr, u16 data);
 void Write32(u32 phys_addr, u32 data);
 void Write64(u32 phys_addr, u64 data);
 }

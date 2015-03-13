@@ -1,6 +1,12 @@
 #include "core/ee/interpreter/interpreter.h"
 #include "core/ee/ee.h"
 
+#ifdef USE_BIOS_HLE
+#include "core/hle/bios_hle.h"
+#endif
+
+#include "common/log.h"
+
 void ee_interpreter::mfc0(ee_inst inst)
 {
     rGPR[inst.RT].ud[0] = rCOP0[inst.RD];
@@ -25,7 +31,23 @@ void ee_interpreter::break_ee(ee_inst inst)
 
 void ee_interpreter::syscall(ee_inst inst)
 {
+#ifndef USE_BIOS_HLE
     rCOP0[EE::COP0_regs::Cause] = 0x20;
     rCOP0[EE::COP0_regs::Status] |= 0x2;
     ee_interpreter::exception();
+#else
+    log_print("HLE", "Syscall number " + to_string(rGPR[3].uc[0] & 0x7f), log_level::warning);
+
+    HLE::syscalls[rGPR[3].uc[0] & 0x7f]();
+#endif
+}
+
+void ee_interpreter::ei(ee_inst inst)
+{
+    rCOP0[EE::COP0_regs::Status] |= 0x00010001;
+}
+
+void ee_interpreter::di(ee_inst inst)
+{
+    rCOP0[EE::COP0_regs::Status] &= 0xfffefffe;
 }

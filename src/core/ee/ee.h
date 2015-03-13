@@ -37,7 +37,7 @@ struct ee_state_t
     ee_reg hi,lo;
 
     u32 cop0r[32];
-    
+
     u32 cop1r[32];
 
     u32 pc;
@@ -45,19 +45,19 @@ struct ee_state_t
     u32 condition;
     u32 code;
     u32 jump;
-	u32 jump_likely;
+    u32 jump_likely;
     u32 jump_target;
 
-	u32 branch;
+    u32 branch;
 };
 
 enum COP0_regs
 {
-	BadVAddr = 8,
-	Count = 9,
-	Status = 12,
-	Cause = 13,
-	EPC = 14,
+    BadVAddr = 8,
+    Count = 9,
+    Status = 12,
+    Cause = 13,
+    EPC = 14,
 };
 
 extern ee_state_t ee_state;
@@ -78,6 +78,7 @@ u32 Read32(u32 virt_addr);
 u64 Read64(u32 virt_addr);
 
 void Write8(u32 virt_addr, u8 data);
+void Write16(u32 virt_addr, u16 data);
 void Write32(u32 virt_addr, u32 data);
 void Write64(u32 virt_addr, u64 data);
 void Write128(u32 virt_addr, ee_reg data);

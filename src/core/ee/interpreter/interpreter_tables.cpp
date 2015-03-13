@@ -29,19 +29,23 @@ static ee_op_template primary_table[] =
     {11, ee_interpreter::sltiu},
     {12, ee_interpreter::andi},
     {13, ee_interpreter::ori},
+    {14, ee_interpreter::xori},
     {15, ee_interpreter::lui},
     {16, ee_interpreter::run_table16},
     {20, ee_interpreter::beql},
     {21, ee_interpreter::bnel},
     {22, ee_interpreter::blezl},
     {24, ee_interpreter::daddi},
+    {25, ee_interpreter::daddiu},
     {28, ee_interpreter::run_table28},
     {31, ee_interpreter::sq},
     {32, ee_interpreter::lb},
     {35, ee_interpreter::lw},
     {36, ee_interpreter::lbu},
     {37, ee_interpreter::lhu},
+    {39, ee_interpreter::lwu},
     {40, ee_interpreter::sb},
+    {41, ee_interpreter::sh},
     {43, ee_interpreter::sw},
     {55, ee_interpreter::ld},
     {57, ee_interpreter::swc1},
@@ -62,6 +66,7 @@ static ee_op_template table0[] =
     {16, ee_interpreter::mfhi},
     {18, ee_interpreter::mflo},
     {24, ee_interpreter::mult},
+    {26, ee_interpreter::div},
     {27, ee_interpreter::divu},
     {33, ee_interpreter::addu},
     {35, ee_interpreter::subu},
@@ -70,6 +75,10 @@ static ee_op_template table0[] =
     {42, ee_interpreter::slt},
     {43, ee_interpreter::sltu},
     {45, ee_interpreter::daddu},
+    {56,  ee_interpreter::dsll},
+    {60,  ee_interpreter::dsll32},
+    {62,  ee_interpreter::dsrl32},
+    {63,  ee_interpreter::dsra32},
 };
 
 static ee_op_template table1[] =
@@ -86,11 +95,14 @@ static ee_op_template table16[] =
 
 static ee_op_template table16_16[] =
 {
-    {2, ee_interpreter::tlbwi},
+    {2,  ee_interpreter::tlbwi},
+    {56, ee_interpreter::ei},
+    {57, ee_interpreter::di},
 };
 
 static ee_op_template table28[] =
 {
+    {24, ee_interpreter::mult1},
     {40, ee_interpreter::run_table28_40},
 };
 

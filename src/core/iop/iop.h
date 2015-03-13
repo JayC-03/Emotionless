@@ -26,18 +26,18 @@ struct iop_state_t
     u32 condition;
     u32 code;
     u32 jump;
-	u32 jump_likely;
+    u32 jump_likely;
     u32 jump_target;
 
-	u32 branch;
+    u32 branch;
 };
 
 enum COP0_regs
 {
-	BadVAddr = 8,
-	Status = 12,
-	Cause = 13,
-	EPC = 14,
+    BadVAddr = 8,
+    Status = 12,
+    Cause = 13,
+    EPC = 14,
 };
 
 extern iop_state_t iop_state;

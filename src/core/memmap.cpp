@@ -1,6 +1,7 @@
 #include "core/memmap.h"
 #include "common/log.h"
 #include "core/hw/dmac.h"
+#include "core/hw/gs/gs.h"
 
 namespace MemoryEE
 {
@@ -12,16 +13,7 @@ u32 spr[0x1000];
 u8 Read8(u32 phys_addr)
 {
     u32 res = 0;
-    //RAM
-    if(phys_addr < 0x02000000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1fffffc) >> 2];
-    //Scratchpad RAM
-    else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000) res = spr[(phys_addr & 0x3ffc) >> 2];
-    //IOP RAM
-    else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
-    //BIOS region
-    else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0x3ffffc) >> 2];
-    else log_print("MemoryEE", "Unrecognized Read8 from physical address " + to_string(phys_addr), log_level::warning);
-    //res = bswap32(res);
+    res = Read32(phys_addr & 0xfffffffc);
     res >>= (phys_addr & 3) << 8;
     res &= 0xff;
     return res;
@@ -30,16 +22,7 @@ u8 Read8(u32 phys_addr)
 u16 Read16(u32 phys_addr)
 {
     u32 res = 0;
-    //RAM
-    if(phys_addr < 0x02000000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1fffffc) >> 2];
-    //Scratchpad RAM
-    else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000) res = spr[(phys_addr & 0x3ffc) >> 2];
-    //IOP RAM
-    else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
-    //BIOS region
-    else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0x3ffffc) >> 2];
-    else log_print("MemoryEE", "Unrecognized Read8 from physical address " + to_string(phys_addr), log_level::warning);
-    //res = bswap32(res);
+    res = Read32(phys_addr & 0xfffffffc);
     res >>= (phys_addr & 1) << 16;
     res &= 0xffff;
     return res;
@@ -56,6 +39,8 @@ u32 Read32(u32 phys_addr)
     else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0xffffc) >> 2];
+    //DMAC
+    else if(phys_addr < 0x1000f000 && phys_addr >= 0x10008000) res = DMAC::Read32(phys_addr);
     else log_print("MemoryEE", "Unrecognized Read32 from physical address " + to_string(phys_addr), log_level::warning);
     //res = bswap32(res);
     return res;
@@ -70,10 +55,19 @@ u64 Read64(u32 phys_addr)
 void Write8(u32 phys_addr, u8 data)
 {
     log_print("MemoryEE", "Write8 at physical address " + to_string(phys_addr), log_level::warning);
-    u32 temp = Read32(phys_addr);
+    u32 temp = Read32(phys_addr & 0xfffffffc);
     temp &= 0xFF << ((phys_addr & 3) << 8);
     temp |= data << ((phys_addr & 3) << 8);
-    Write32(phys_addr,temp);
+    Write32(phys_addr & 0xfffffffc,temp);
+}
+
+void Write16(u32 phys_addr, u16 data)
+{
+    log_print("MemoryEE", "Write16 at physical address " + to_string(phys_addr), log_level::warning);
+    u32 temp = Read32(phys_addr & 0xfffffffc);
+    temp &= 0xFFFF << ((phys_addr & 1) << 16);
+    temp |= data << ((phys_addr & 1) << 8);
+    Write32(phys_addr & 0xfffffffc,temp);
 }
 
 void Write32(u32 phys_addr, u32 data)
@@ -84,8 +78,12 @@ void Write32(u32 phys_addr, u32 data)
     else if(phys_addr >= 0x02000000 && phys_addr < 0x02004000) spr[(phys_addr & 0x3ffc) >> 2] = data;
     //IOP RAM
     else if(phys_addr >= 0x1c000000 && phys_addr < 0x1c800000) MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2] = data;
+    //DMAC area
+    if(phys_addr >= 0x10008000 && phys_addr < 0x1000f000) DMAC::Write32(phys_addr, data);
     //Extended DMAC area
-    if(phys_addr >= 0x1000F500 && phys_addr < 0x1000F600) DMAC::Write32(phys_addr, data);
+    if(phys_addr >= 0x1000f500 && phys_addr < 0x1000f600) DMAC::Write32(phys_addr, data);
+    //Privileged GS area
+    if(phys_addr >= 0x12000000 && phys_addr < 0x1200108c) GS::Write32(phys_addr, data);
     log_print("MemoryEE", "Write32 at physical address " + to_string(phys_addr), log_level::warning);
 }
 

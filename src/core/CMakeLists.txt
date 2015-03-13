@@ -18,7 +18,10 @@ iop/interpreter/interpreter_integer.cpp
 iop/interpreter/interpreter_loadstore.cpp
 iop/interpreter/interpreter_tables.cpp
 hw/dmac.cpp
+hw/gif.cpp
+hw/gs/gs.cpp
 hle/elf.cpp
+hle/bios_hle.cpp
 )
 
 set(LIBS

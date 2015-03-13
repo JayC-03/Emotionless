@@ -41,6 +41,11 @@ void Write8(u32 virt_addr, u8 data)
     MemoryEE::Write8(TranslateAddress(virt_addr),data);
 }
 
+void Write16(u32 virt_addr, u16 data)
+{
+    MemoryEE::Write16(TranslateAddress(virt_addr),data);
+}
+
 void Write32(u32 virt_addr, u32 data)
 {
     MemoryEE::Write32(TranslateAddress(virt_addr),data);

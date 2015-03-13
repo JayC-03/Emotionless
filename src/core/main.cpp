@@ -3,6 +3,13 @@
 #include "core/iop/iop.h"
 #include "core/memmap.h"
 #include "core/hle/elf.h"
+
+#ifdef USE_BIOS_HLE
+#include "core/hle/bios_hle.h"
+#endif
+
+#include "core/hw/dmac.h"
+
 #include "common/log.h"
 
 void main_loop(std::string fn, std::string fn2)
@@ -12,6 +19,11 @@ void main_loop(std::string fn, std::string fn2)
 
     EE::interpreter->init();
     IOP::interpreter->init();
+    DMAC::init_dmac_channels();
+
+#ifdef USE_BIOS_HLE
+    HLE::init_syscalls();
+#endif
 
     FILE* bios = fopen(fn.c_str(),"rb");
     fread(MemoryEE::bios,1,0x400000,bios);
@@ -22,9 +34,11 @@ void main_loop(std::string fn, std::string fn2)
     elf.load(elffp);
 #endif
 
-    for(int i = 0; i < 8000; i++)
+    for(int i = 0; i < 640000; i++)
     {
         EE::interpreter->single_step();
+        DMAC::single_step();
+
 #ifndef USE_BIOS_HLE
         if((i & 3) == 0) IOP::interpreter->single_step();
 #endif
