@@ -16,12 +16,10 @@ Tasks
 ================
 
 - Get all EE opcodes implemented in the Interpreter.
-- Emulate EE exceptions.
 - Create a scheduling system, one that's hopefully somewhat generic, like Dolphin's CoreTiming.
 - Emulate the EE's TLB. I haven't found docs yet, so we might have to resort to docs on base MIPS or PCSX2 code.
 - Create a basic Qt UI
 - Create a basic Qt debugger
-- Start working on an IOP core.
 
 Goals
 =====

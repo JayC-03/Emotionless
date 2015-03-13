@@ -32,15 +32,30 @@ u32 Read32(u32 phys_addr)
 {
     u32 res = 0;
     //RAM
-    if(phys_addr < 0x02000000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1fffffc) >> 2];
+    if(phys_addr < 0x02000000 && phys_addr >= 0x00000000)
+	{
+		res = ram[(phys_addr & 0x1fffffc) >> 2];
+	}
     //Scratchpad RAM
-    else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000) res = spr[(phys_addr & 0x3ffc) >> 2];
+    else if(phys_addr < 0x02004000 && phys_addr >= 0x02000000)
+	{
+		res = spr[(phys_addr & 0x3ffc) >> 2];
+	}
     //IOP RAM
-    else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000) res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
+    else if(phys_addr < 0x1c800000 && phys_addr >= 0x1c000000)
+	{
+		res = MemoryIOP::ram[(phys_addr & 0x1ffffc) >> 2];
+	}
     //BIOS region
-    else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = bios[(phys_addr & 0xffffc) >> 2];
+    else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000)
+	{
+		res = bios[(phys_addr & 0xffffc) >> 2];
+	}
     //DMAC
-    else if(phys_addr < 0x1000f000 && phys_addr >= 0x10008000) res = DMAC::Read32(phys_addr);
+    else if(phys_addr < 0x1000f000 && phys_addr >= 0x10008000)
+	{
+		res = DMAC::Read32(phys_addr);
+	}
     else log_print("MemoryEE", "Unrecognized Read32 from physical address " + to_string(phys_addr), log_level::warning);
     //res = bswap32(res);
     return res;
