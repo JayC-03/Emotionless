@@ -38,7 +38,7 @@ void ee_interpreter::syscall(ee_inst inst)
 #else
     log_print("HLE", "Syscall number " + to_string(rGPR[3].uc[0] & 0x7f), log_level::warning);
 
-    HLE::syscalls[rGPR[3].uc[0] & 0x7f]();
+    HLE::syscalls[rGPR[3].uc[0] & 0x7f](rGPR[3].uc[0] & 0x7f);
 #endif
 }
 

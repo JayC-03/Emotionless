@@ -8,9 +8,12 @@
 class ee_interpreter : public ee_core_base
 {
 public:
+	bool end_block;
+
     void init() override;
     void shutdown() override;
     void single_step() override;
+	void run() override;
 
     static std::function<void(ee_inst)> op_table[64];
     static std::function<void(ee_inst)> op_table0[64];
@@ -46,8 +49,10 @@ public:
     static void swc1(ee_inst inst);
     static void bne(ee_inst inst);
     static void beq(ee_inst inst);
+	static void bltz(ee_inst inst);
     static void bgez(ee_inst inst);
     static void blez(ee_inst inst);
+	static void bgtz(ee_inst inst);
     static void bnel(ee_inst inst);
     static void beql(ee_inst inst);
     static void blezl(ee_inst inst);
@@ -90,6 +95,7 @@ public:
     static void mfhi(ee_inst inst);
     static void mflo(ee_inst inst);
     static void tlbwi(ee_inst inst);
+	static void paddub(ee_inst inst);
     static void padduw(ee_inst inst);
     static void movn(ee_inst inst);
     static void ei(ee_inst inst);

@@ -1,11 +1,14 @@
 #include "core/hw/dmac.h"
 #include "core/hw/gif.h"
 #include "core/memmap.h"
+#include "core/ee/ee.h"
 #include "common/log.h"
 
 namespace DMAC
 {
 dmac_channel_t dmac_channels[10];
+
+u32 dmac_status;
 
 void dmac_channel_t::single_step()
 {
@@ -17,6 +20,25 @@ void dmac_channel_t::single_step()
         {
             //Chain mode
             single_step_chain();
+            break;
+        }
+        }
+    }
+}
+
+void dmac_channel_t::run()
+{
+    if(chcr & 0x100) //Check STR
+    {
+        switch((chcr >> 2) & 0x3) //Check MOD
+        {
+        case 1:
+        {
+            //Chain mode
+            while(chcr & 0x100)
+			{
+				single_step_chain();
+			}
             break;
         }
         }
@@ -161,6 +183,16 @@ u32 Read32(u32 addr)
         res = dmac_channels[2].tadr;
         break;
     }
+	case 0x1000c000:
+    {
+        res = dmac_channels[5].chcr;
+        break;
+    }
+	case 0x1000e010:
+	{
+		res = dmac_status;
+		break;
+	}
     default:
     {
         log_print("DMAC", "Read32 from unimplemented DMAC register at " + to_string(addr) + "!", log_level::warning);
@@ -178,6 +210,7 @@ void Write32(u32 addr, u32 data)
     case 0x1000a000:
     {
         dmac_channels[2].chcr = data;
+		EE::interpreter->end_block = true;
         break;
     }
     case 0x1000a020:
@@ -203,6 +236,14 @@ void single_step()
     for(int i = 0; i<10; i++)
     {
         dmac_channels[i].single_step();
+    }
+}
+
+void run()
+{
+	for(int i = 0; i<10; i++)
+    {
+        dmac_channels[i].run();
     }
 }
 }

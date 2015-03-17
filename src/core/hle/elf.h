@@ -38,7 +38,7 @@ struct ELF_header
 struct ELF
 {
     ELF_header hdr;
-    vector<ELF_prog_hdr> prog_hdrs;
+    std::vector<ELF_prog_hdr> prog_hdrs;
 
     void load(FILE* fp);
 };

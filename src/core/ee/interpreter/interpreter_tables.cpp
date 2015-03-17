@@ -23,6 +23,7 @@ static ee_op_template primary_table[] =
     {4,  ee_interpreter::beq},
     {5,  ee_interpreter::bne},
     {6,  ee_interpreter::blez},
+	{7,  ee_interpreter::bgtz},
     {8,  ee_interpreter::addi},
     {9,  ee_interpreter::addiu},
     {10, ee_interpreter::slti},
@@ -83,6 +84,7 @@ static ee_op_template table0[] =
 
 static ee_op_template table1[] =
 {
+	{0,  ee_interpreter::bltz},
     {1,  ee_interpreter::bgez},
 };
 
@@ -109,6 +111,7 @@ static ee_op_template table28[] =
 static ee_op_template table28_40[] =
 {
     {16, ee_interpreter::padduw},
+	{24, ee_interpreter::paddub},
 };
 
 void init_tables()

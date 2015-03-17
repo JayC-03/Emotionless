@@ -28,7 +28,7 @@ void log_print(std::string component, std::string msg, log_level level)
     }
     }
 
-    std::string final_msg = "[" + component + " | Level " + level_str + "] " + msg;
+    std::string final_msg = "[" + component + " | " + level_str + "] " + msg;
 
     printf("%s\n",final_msg.c_str());
 }

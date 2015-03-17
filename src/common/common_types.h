@@ -26,5 +26,3 @@ typedef double f64;
 #define bswap32 _byteswap_ulong
 #define bswap64 _byteswap_uint64
 #endif
-
-#define vector std::vector

@@ -34,10 +34,10 @@ void main_loop(std::string fn, std::string fn2)
     elf.load(elffp);
 #endif
 
-    for(int i = 0; i < 640000; i++)
+    for(int i = 0;i < 1;i++)
     {
-        EE::interpreter->single_step();
-        DMAC::single_step();
+        EE::interpreter->run();
+        DMAC::run();
 
 #ifndef USE_BIOS_HLE
         if((i & 3) == 0) IOP::interpreter->single_step();
