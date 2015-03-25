@@ -213,6 +213,11 @@ void Write32(u32 addr, u32 data)
 		EE::interpreter->end_block = true;
         break;
     }
+	case 0x1000a010:
+    {
+        dmac_channels[2].madr = data;
+        break;
+    }
     case 0x1000a020:
     {
         dmac_channels[2].qwc = data;
@@ -221,6 +226,29 @@ void Write32(u32 addr, u32 data)
     case 0x1000a030:
     {
         dmac_channels[2].tadr = data;
+        break;
+    }
+	case 0x1000a040:
+    {
+        dmac_channels[2].asr[0] = data;
+        break;
+    }
+	case 0x1000a050:
+    {
+        dmac_channels[2].asr[1] = data;
+        break;
+    }
+	case 0x1000a080:
+    {
+        dmac_channels[2].sadr = data;
+        break;
+    }
+	case 0x1000e010:
+    {
+		u32 stat = data & 0x0000ffff;
+		u32 mask = data & 0xffff0000;
+        dmac_status ^= mask;
+		dmac_status &= ~stat;
         break;
     }
     default:

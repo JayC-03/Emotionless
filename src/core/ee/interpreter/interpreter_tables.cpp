@@ -77,6 +77,7 @@ static ee_op_template table0[] =
     {43, ee_interpreter::sltu},
     {45, ee_interpreter::daddu},
     {56,  ee_interpreter::dsll},
+	{58,  ee_interpreter::dsrl},
     {60,  ee_interpreter::dsll32},
     {62,  ee_interpreter::dsrl32},
     {63,  ee_interpreter::dsra32},

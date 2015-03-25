@@ -34,7 +34,7 @@ void main_loop(std::string fn, std::string fn2)
     elf.load(elffp);
 #endif
 
-    for(int i = 0;i < 1;i++)
+    for(int i = 0;i < 2;i++)
     {
         EE::interpreter->run();
         DMAC::run();

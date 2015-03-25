@@ -40,6 +40,7 @@ public:
     static void dsll(ee_inst inst);
     static void dsll32(ee_inst inst);
     static void srl(ee_inst inst);
+	static void dsrl(ee_inst inst);
     static void dsrl32(ee_inst inst);
     static void sra(ee_inst inst);
     static void dsra32(ee_inst inst);

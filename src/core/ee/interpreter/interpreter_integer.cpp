@@ -21,6 +21,11 @@ void ee_interpreter::srl(ee_inst inst)
     rGPR[inst.RD].ud[0] = (s64)(s32)(rGPR[inst.RT].ul[0] >> inst.SA);
 }
 
+void ee_interpreter::dsrl(ee_inst inst)
+{
+    rGPR[inst.RD].ud[0] = (s64)(s32)(rGPR[inst.RT].ud[0] >> inst.SA);
+}
+
 void ee_interpreter::dsrl32(ee_inst inst)
 {
     rGPR[inst.RD].ud[0] = (s64)(s32)(rGPR[inst.RT].ud[0] >> (inst.SA + 32));
