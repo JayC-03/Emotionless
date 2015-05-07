@@ -10,6 +10,7 @@ ee/interpreter/interpreter_integer.cpp
 ee/interpreter/interpreter_loadstore.cpp
 ee/interpreter/interpreter_mmi.cpp
 ee/interpreter/interpreter_tables.cpp
+ee/jit/jit-x64/jit_x64.cpp
 iop/iop.cpp
 iop/interpreter/interpreter.cpp
 iop/interpreter/interpreter_branch.cpp
@@ -26,6 +27,7 @@ hle/bios_hle.cpp
 
 set(LIBS
 common
+asmjit.a
 )
 
 add_emotionless_library(core "${SRCS}" "${LIBS}")

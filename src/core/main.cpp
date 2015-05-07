@@ -1,5 +1,8 @@
 #include "core/main.h"
 #include "core/ee/ee.h"
+#ifdef USE_JIT
+#include "core/ee/jit/jit-x64/jit_x64.h"
+#endif
 #include "core/iop/iop.h"
 #include "core/memmap.h"
 #include "core/hle/elf.h"
@@ -17,7 +20,13 @@ void main_loop(std::string fn, std::string fn2)
     EE::interpreter = new ee_interpreter();
     IOP::interpreter = new iop_interpreter();
 
+	log_filter = error | warning | debug;
+
     EE::interpreter->init();
+#ifdef USE_JIT
+	ee_jit_x64 ee_jit;
+	ee_jit.init();
+#endif
     IOP::interpreter->init();
     DMAC::init_dmac_channels();
 
@@ -36,13 +45,22 @@ void main_loop(std::string fn, std::string fn2)
 
     for(int i = 0;i < 2;i++)
     {
-        EE::interpreter->run();
+#ifdef USE_JIT
+		ee_jit.compile();
+        ee_jit.run();
+#else
+		EE::interpreter->run();
+#endif
         DMAC::run();
 
 #ifndef USE_BIOS_HLE
         if((i & 3) == 0) IOP::interpreter->single_step();
 #endif
     }
+
+#ifdef USE_JIT
+	ee_jit.shutdown();
+#endif
 
     delete EE::interpreter;
     delete IOP::interpreter;

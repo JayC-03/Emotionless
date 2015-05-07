@@ -6,13 +6,13 @@
 
 #include "common/log.h"
 
-std::function<void(ee_inst)> ee_interpreter::op_table[64];
-std::function<void(ee_inst)> ee_interpreter::op_table0[64];
-std::function<void(ee_inst)> ee_interpreter::op_table1[32];
-std::function<void(ee_inst)> ee_interpreter::op_table16[32];
-std::function<void(ee_inst)> ee_interpreter::op_table16_16[64];
-std::function<void(ee_inst)> ee_interpreter::op_table28[64];
-std::function<void(ee_inst)> ee_interpreter::op_table28_40[32];
+interpreter_func_type ee_interpreter::op_table[64];
+interpreter_func_type ee_interpreter::op_table0[64];
+interpreter_func_type ee_interpreter::op_table1[32];
+interpreter_func_type ee_interpreter::op_table16[32];
+interpreter_func_type ee_interpreter::op_table16_16[64];
+interpreter_func_type ee_interpreter::op_table28[64];
+interpreter_func_type ee_interpreter::op_table28_40[32];
 
 void ee_interpreter::init()
 {
@@ -54,7 +54,7 @@ void ee_interpreter::single_step()
         }
     }
 
-    /*log_print("EE Interpreter", "PC: " + to_string(PC), log_level::verbose);
+    log_print("EE Interpreter", "PC: " + to_string(PC), log_level::debug);
 
     for(int i = 0; i < 32; i++)
     {
@@ -62,19 +62,19 @@ void ee_interpreter::single_step()
 		std::string reghi(to_string(rGPR[i].ud[1]));
 		std::string reglo(to_string(rGPR[i].ud[0]));
         log_print("EE Interpreter", "R" + regnum + ": " + reghi + " " + reglo, log_level::verbose);
-    }*/
+    }
 
     inst_code.hex = EE::Read32(PC);
 
-    /*log_print("EE Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::verbose);
+    log_print("EE Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::debug);
 
-    /*log_print("EE Interpreter", "Instruction RS: " + to_string(inst_code.RS), log_level::verbose);
+    log_print("EE Interpreter", "Instruction RS: " + to_string(inst_code.RS), log_level::verbose);
 
     log_print("EE Interpreter", "Instruction RT: " + to_string(inst_code.RT), log_level::verbose);
 
     log_print("EE Interpreter", "Instruction RD: " + to_string(inst_code.RD), log_level::verbose);
 
-    log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);*/
+    log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::debug);
 
     op_table[inst_code.opcd](inst_code);
 

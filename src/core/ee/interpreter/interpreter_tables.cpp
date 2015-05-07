@@ -11,7 +11,7 @@ namespace interpreter_tables
 struct ee_op_template
 {
     u32 opcode;
-    std::function<void(ee_inst)> inst;
+    interpreter_func_type inst;
 };
 
 static ee_op_template primary_table[] =

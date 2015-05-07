@@ -5,6 +5,8 @@
 #include "core/ee/ee_core_base.h"
 #include "core/ee/ee_inst.h"
 
+typedef void (*interpreter_func_type)(ee_inst);
+
 class ee_interpreter : public ee_core_base
 {
 public:
@@ -15,13 +17,13 @@ public:
     void single_step() override;
 	void run() override;
 
-    static std::function<void(ee_inst)> op_table[64];
-    static std::function<void(ee_inst)> op_table0[64];
-    static std::function<void(ee_inst)> op_table1[32];
-    static std::function<void(ee_inst)> op_table16[32];
-    static std::function<void(ee_inst)> op_table16_16[64];
-    static std::function<void(ee_inst)> op_table28[64];
-    static std::function<void(ee_inst)> op_table28_40[32];
+    static interpreter_func_type op_table[64];
+    static interpreter_func_type op_table0[64];
+    static interpreter_func_type op_table1[32];
+    static interpreter_func_type op_table16[32];
+    static interpreter_func_type op_table16_16[64];
+    static interpreter_func_type op_table28[64];
+    static interpreter_func_type op_table28_40[32];
 
     static void unknown(ee_inst inst);
 

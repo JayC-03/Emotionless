@@ -1,8 +1,12 @@
 #include "common/log.h"
 
+log_level log_filter;
+
 //All you need for logging is slight upgrade of printf.
 void log_print(std::string component, std::string msg, log_level level)
 {
+	if(!(level & log_filter)) return;
+
     std::string level_str;
     switch(level)
     {
