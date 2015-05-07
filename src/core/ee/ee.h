@@ -48,7 +48,7 @@ struct ee_state_t
     u32 jump_likely;
     u32 jump_target;
 
-	u32 downcount;
+    u32 downcount;
 
     u32 branch;
 };

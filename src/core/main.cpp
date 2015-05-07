@@ -20,12 +20,12 @@ void main_loop(std::string fn, std::string fn2)
     EE::interpreter = new ee_interpreter();
     IOP::interpreter = new iop_interpreter();
 
-	log_filter = error | warning | debug;
+    log_filter = error | warning | debug;
 
     EE::interpreter->init();
 #ifdef USE_JIT
-	ee_jit_x64 ee_jit;
-	ee_jit.init();
+    ee_jit_x64 ee_jit;
+    ee_jit.init();
 #endif
     IOP::interpreter->init();
     DMAC::init_dmac_channels();
@@ -43,13 +43,13 @@ void main_loop(std::string fn, std::string fn2)
     elf.load(elffp);
 #endif
 
-    for(int i = 0;i < 2;i++)
+    for(int i = 0; i < 2; i++)
     {
 #ifdef USE_JIT
-		ee_jit.compile();
+        ee_jit.compile();
         ee_jit.run();
 #else
-		EE::interpreter->run();
+        EE::interpreter->run();
 #endif
         DMAC::run();
 
@@ -59,7 +59,7 @@ void main_loop(std::string fn, std::string fn2)
     }
 
 #ifdef USE_JIT
-	ee_jit.shutdown();
+    ee_jit.shutdown();
 #endif
 
     delete EE::interpreter;

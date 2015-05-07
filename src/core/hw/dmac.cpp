@@ -36,9 +36,9 @@ void dmac_channel_t::run()
         {
             //Chain mode
             while(chcr & 0x100)
-			{
-				single_step_chain();
-			}
+            {
+                single_step_chain();
+            }
             break;
         }
         }
@@ -183,16 +183,16 @@ u32 Read32(u32 addr)
         res = dmac_channels[2].tadr;
         break;
     }
-	case 0x1000c000:
+    case 0x1000c000:
     {
         res = dmac_channels[5].chcr;
         break;
     }
-	case 0x1000e010:
-	{
-		res = dmac_status;
-		break;
-	}
+    case 0x1000e010:
+    {
+        res = dmac_status;
+        break;
+    }
     default:
     {
         log_print("DMAC", "Read32 from unimplemented DMAC register at " + to_string(addr) + "!", log_level::warning);
@@ -210,10 +210,10 @@ void Write32(u32 addr, u32 data)
     case 0x1000a000:
     {
         dmac_channels[2].chcr = data;
-		EE::interpreter->end_block = true;
+        EE::interpreter->end_block = true;
         break;
     }
-	case 0x1000a010:
+    case 0x1000a010:
     {
         dmac_channels[2].madr = data;
         break;
@@ -228,27 +228,27 @@ void Write32(u32 addr, u32 data)
         dmac_channels[2].tadr = data;
         break;
     }
-	case 0x1000a040:
+    case 0x1000a040:
     {
         dmac_channels[2].asr[0] = data;
         break;
     }
-	case 0x1000a050:
+    case 0x1000a050:
     {
         dmac_channels[2].asr[1] = data;
         break;
     }
-	case 0x1000a080:
+    case 0x1000a080:
     {
         dmac_channels[2].sadr = data;
         break;
     }
-	case 0x1000e010:
+    case 0x1000e010:
     {
-		u32 stat = data & 0x0000ffff;
-		u32 mask = data & 0xffff0000;
+        u32 stat = data & 0x0000ffff;
+        u32 mask = data & 0xffff0000;
         dmac_status ^= mask;
-		dmac_status &= ~stat;
+        dmac_status &= ~stat;
         break;
     }
     default:
@@ -269,7 +269,7 @@ void single_step()
 
 void run()
 {
-	for(int i = 0; i<10; i++)
+    for(int i = 0; i<10; i++)
     {
         dmac_channels[i].run();
     }

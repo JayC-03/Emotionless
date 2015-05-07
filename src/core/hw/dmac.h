@@ -10,11 +10,11 @@ struct dmac_channel_t
     u32 madr;
     u32 qwc;
     u32 tadr;
-	u32 asr[2];
-	u32 sadr;
+    u32 asr[2];
+    u32 sadr;
     void single_step();
     void single_step_chain();
-	void run();
+    void run();
     std::function<void(u32)> receive;
 };
 

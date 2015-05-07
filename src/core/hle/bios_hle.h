@@ -12,24 +12,24 @@ enum SYSCALL_REGS
     PARAM2 = 6,
     PARAM3 = 7,
     PARAM4 = 8,
-	PARAM5 = 9,
+    PARAM5 = 9,
 };
 
 enum THREAD_STATUS
 {
     THREAD_RUNNING = 1,
-	THREAD_ZOMBIE  = 7,
+    THREAD_ZOMBIE  = 7,
 };
 
 struct thread_param_t
 {
-	u32 status;
-	u32 thread_proc;
-	u32 stack_base;
-	u32 stack_size;
-	u32 gp;
-	u32 priority;
-	u32 current_priority;
+    u32 status;
+    u32 thread_proc;
+    u32 stack_base;
+    u32 stack_size;
+    u32 gp;
+    u32 priority;
+    u32 current_priority;
 };
 
 struct thread_t
@@ -51,20 +51,20 @@ struct thread_t
 
 struct semaphore_param_t
 {
-	u32 count;
-	u32 max_count;
-	u32 init_count;
-	u32 wait_threads;
-	u32 attributes;
-	u32 options;
+    u32 count;
+    u32 max_count;
+    u32 init_count;
+    u32 wait_threads;
+    u32 attributes;
+    u32 options;
 };
 
 struct semaphore_t
 {
-	u32 valid;
-	u32 count;
-	u32 max_count;
-	u32 wait_count;
+    u32 valid;
+    u32 count;
+    u32 max_count;
+    u32 wait_count;
 };
 
 struct intc_handler_t

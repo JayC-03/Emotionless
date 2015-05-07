@@ -9,6 +9,6 @@ public:
     virtual void shutdown() = 0;
     virtual void clear_cache() {}
     virtual void run() {}
-	virtual void compile() {}
+    virtual void compile() {}
     virtual void single_step() {}
 };
