@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <initializer_list>
 #include <type_traits>
-#include "CommonTypes.h"
+#include "common/common_types.h"
 
 // Helper functions:
 

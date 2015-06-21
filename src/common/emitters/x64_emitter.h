@@ -13,6 +13,7 @@
 #include "common/bit_set.h"
 #include "common/code_block.h"
 #include "common/common_types.h"
+#include "common/log.h"
 
 namespace Gen
 {
@@ -166,36 +167,36 @@ struct OpArg
     void WriteSingleByteOp(XEmitter* emit, u8 op, X64Reg operandReg, int bits);
 
     u64 Imm64() const {
-        assert(scale == SCALE_IMM64);
+        //assert(scale == SCALE_IMM64);
         return (u64)offset;
     }
     u32 Imm32() const {
-        assert(scale == SCALE_IMM32);
+        //assert(scale == SCALE_IMM32);
         return (u32)offset;
     }
     u16 Imm16() const {
-        assert(scale == SCALE_IMM16);
+        //assert(scale == SCALE_IMM16);
         return (u16)offset;
     }
     u8  Imm8()  const {
-        assert(scale == SCALE_IMM8);
+        //assert(scale == SCALE_IMM8);
         return (u8)offset;
     }
 
     s64 SImm64() const {
-        assert(scale == SCALE_IMM64);
+        //assert(scale == SCALE_IMM64);
         return (s64)offset;
     }
     s32 SImm32() const {
-        assert(scale == SCALE_IMM32);
+        //assert(scale == SCALE_IMM32);
         return (s32)offset;
     }
     s16 SImm16() const {
-        assert(scale == SCALE_IMM16);
+        //assert(scale == SCALE_IMM16);
         return (s16)offset;
     }
     s8  SImm8()  const {
-        assert(scale == SCALE_IMM8);
+        //assert(scale == SCALE_IMM8);
         return (s8)offset;
     }
 
@@ -244,8 +245,8 @@ struct OpArg
 
     void AddMemOffset(int val)
     {
-        assert(scale == SCALE_RIP || (scale <= SCALE_ATREG && scale > SCALE_NONE),
-               "Tried to increment an OpArg which doesn't have an offset");
+        //assert(scale == SCALE_RIP || (scale <= SCALE_ATREG && scale > SCALE_NONE),
+        //       "Tried to increment an OpArg which doesn't have an offset");
         offset += val;
     }
 
@@ -310,8 +311,7 @@ inline u32 PtrOffset(const void* ptr, const void* base)
     s64 distance = (s64)ptr-(s64)base;
     if (distance >= 0x80000000LL || distance < -0x80000000LL)
     {
-        log_print("pointer offset out of range");
-        assert(0);
+        //assert(0);
         return 0;
     }
     return (u32)distance;
@@ -1078,7 +1078,7 @@ public:
 class x64_code_block : public code_block<XEmitter>
 {
 private:
-    void PoisonMemory() override
+    void poison() override
     {
         // x86-64: 0xCC = breakpoint
         memset(region, 0xCC, region_size);

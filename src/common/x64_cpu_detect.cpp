@@ -42,9 +42,9 @@ void CPUInfo::Detect()
 
     cpuid(cpu_id, 0x00000000, 0);
     u32 max_std_fn = cpu_id[0];
-    ((int*)brand_string) = cpu_id[1];
-    ((int*)(brand_string + 4)) = cpu_id[3];
-    ((int*)(brand_string + 8)) = cpu_id[2];
+    *((int*)brand_string) = cpu_id[1];
+    *((int*)(brand_string + 4)) = cpu_id[3];
+    *((int*)(brand_string + 8)) = cpu_id[2];
     cpuid(cpu_id, 0x80000000, 0);
     u32 max_ext_fn = cpu_id[0];
 

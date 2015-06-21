@@ -10,7 +10,7 @@ enum cpu_vendor
     VENDOR_OTHER
 };
 
-struct cpu_info
+struct CPUInfo
 {
     cpu_vendor vendor;
 
@@ -42,3 +42,5 @@ struct cpu_info
 
     void Detect();
 };
+
+extern CPUInfo cpu_info;
