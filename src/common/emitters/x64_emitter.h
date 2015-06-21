@@ -1,4 +1,8 @@
-//Derived from Dolphin code
+// Copyright 2008 Dolphin Emulator Project
+// Licensed under GPLv2+
+// Refer to the license.txt file included.
+
+// WARNING - THIS LIBRARY IS NOT THREAD SAFE!!!
 
 #pragma once
 
