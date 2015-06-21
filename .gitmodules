@@ -1,3 +1,0 @@
-[submodule "externals/asmjit"]
-	path = externals/asmjit
-	url = git@github.com:MoochMcGee/asmjit.git

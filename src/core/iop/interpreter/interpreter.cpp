@@ -30,24 +30,24 @@ void iop_interpreter::single_step()
 {
     static iop_inst inst_code;
 
-    log_print("IOP Interpreter", "PC: " + to_string(PC), log_level::verbose);
+    log_print("IOP Interpreter", log_level::verbose, "PC: %08x", PC);
 
     for(int i = 0; i < 32; i++)
     {
-        log_print("IOP Interpreter", "R" + to_string(i) + ": " + to_string(rGPR[i]), log_level::verbose);
+        log_print("IOP Interpreter", log_level::verbose, "R%02x: %08x", i, rGPR[i]);
     }
 
     inst_code.hex = IOP::Read32(PC);
 
-    log_print("IOP Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::verbose);
+    log_print("IOP Interpreter", log_level::verbose, "Instruction: %08x", inst_code.hex);
 
-    log_print("IOP Interpreter", "Instruction RS: " + to_string(inst_code.RS), log_level::verbose);
+    log_print("IOP Interpreter", log_level::verbose, "Instruction RS: %02x", inst_code.RS);
 
-    log_print("IOP Interpreter", "Instruction RT: " + to_string(inst_code.RT), log_level::verbose);
+    log_print("IOP Interpreter", log_level::verbose, "Instruction RT: %02x", inst_code.RT);
 
-    log_print("IOP Interpreter", "Instruction RD: " + to_string(inst_code.RD), log_level::verbose);
+    log_print("IOP Interpreter", log_level::verbose, "Instruction RD: %02x", inst_code.RD);
 
-    log_print("IOP Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::verbose);
+    log_print("IOP Interpreter", log_level::verbose, "Instruction Opcode: %02x", inst_code.opcd);
 
     if(IOP::iop_state.jump)
     {
@@ -73,12 +73,12 @@ void iop_interpreter::single_step()
 
 void iop_interpreter::unknown(iop_inst inst)
 {
-    log_print("IOP Interpreter", "Unknown instruction " + to_string(inst.hex) + " at address " + to_string(PC), log_level::error);
+    log_print("IOP Interpreter", log_level::error, "Unknown instruction %08x at address %08x", inst.hex, PC);
 }
 
 void iop_interpreter::exception()
 {
-    log_print("IOP Interpreter", "Exception at address " + to_string(PC), log_level::debug);
+    log_print("IOP Interpreter", log_level::debug, "Exception at address %08x", PC);
     rCOP0[IOP::COP0_regs::EPC] = PC;
 
     //TODO: Fully implement this!

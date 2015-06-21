@@ -36,7 +36,7 @@ void ee_interpreter::syscall(ee_inst inst)
     rCOP0[EE::COP0_regs::Status] |= 0x2;
     ee_interpreter::exception();
 #else
-    log_print("HLE", "Syscall number " + to_string(rGPR[3].uc[0] & 0x7f), log_level::warning);
+    log_print("HLE", log_level::warning, "Syscall number %02x", rGPR[3].uc[0] & 0x7f);
 
     HLE::syscalls[rGPR[3].uc[0] & 0x7f](rGPR[3].uc[0] & 0x7f);
 #endif

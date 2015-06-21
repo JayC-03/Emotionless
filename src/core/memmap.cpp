@@ -56,20 +56,20 @@ u32 Read32(u32 phys_addr)
     {
         res = DMAC::Read32(phys_addr);
     }
-    else log_print("MemoryEE", "Unrecognized Read32 from physical address " + to_string(phys_addr), log_level::warning);
+    else log_print("MemoryEE", log_level::warning, "Unrecognized Read32 from physical address %08x", phys_addr);
     //res = bswap32(res);
     return res;
 }
 
 u64 Read64(u32 phys_addr)
 {
-    log_print("MemoryEE", "Read64 from physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryEE", log_level::warning, "Read64 from physical address %08x", phys_addr);
     return ((u64)Read32(phys_addr + 4) << 32) | Read32(phys_addr);
 }
 
 void Write8(u32 phys_addr, u8 data)
 {
-    log_print("MemoryEE", "Write8 at physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryEE", log_level::warning, "Write8 at physical address %08x", phys_addr);
     u32 temp = Read32(phys_addr & 0xfffffffc);
     temp &= 0xFF << ((phys_addr & 3) << 8);
     temp |= data << ((phys_addr & 3) << 8);
@@ -78,7 +78,7 @@ void Write8(u32 phys_addr, u8 data)
 
 void Write16(u32 phys_addr, u16 data)
 {
-    log_print("MemoryEE", "Write16 at physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryEE", log_level::warning, "Write16 at physical address %08x", phys_addr);
     u32 temp = Read32(phys_addr & 0xfffffffc);
     temp &= 0xFFFF << ((phys_addr & 1) << 16);
     temp |= data << ((phys_addr & 1) << 8);
@@ -99,12 +99,12 @@ void Write32(u32 phys_addr, u32 data)
     if(phys_addr >= 0x1000f500 && phys_addr < 0x1000f600) DMAC::Write32(phys_addr, data);
     //Privileged GS area
     if(phys_addr >= 0x12000000 && phys_addr < 0x1200108c) GS::Write32(phys_addr, data);
-    log_print("MemoryEE", "Write32 at physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryEE", log_level::warning, "Write32 at physical address %08x", phys_addr);
 }
 
 void Write64(u32 phys_addr, u64 data)
 {
-    log_print("MemoryEE", "Write64 at physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryEE", log_level::warning, "Write64 at physical address %08x", phys_addr);
     Write32(phys_addr,data&0xffffffff);
     Write32(phys_addr + 4, data >> 32);
 }
@@ -123,7 +123,7 @@ u8 Read8(u32 phys_addr)
     if(phys_addr < 0x00200000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = MemoryEE::bios[(phys_addr & 0x3ffffc) >> 2];
-    else log_print("MemoryIOP", "Unrecognized Read8 from physical address " + to_string(phys_addr), log_level::warning);
+    else log_print("MemoryIOP", log_level::warning, "Read8 from physical address %08x", phys_addr);
     //res = bswap32(res);
     res >>= (phys_addr & 3) << 8;
     res &= 0xff;
@@ -137,14 +137,14 @@ u32 Read32(u32 phys_addr)
     if(phys_addr < 0x00200000 && phys_addr >= 0x00000000) res = ram[(phys_addr & 0x1ffffc) >> 2];
     //BIOS region
     else if(phys_addr < 0x20000000 && phys_addr >= 0x1fc00000) res = MemoryEE::bios[(phys_addr & 0xffffc) >> 2];
-    else log_print("MemoryIOP", "Unrecognized Read32 from physical address " + to_string(phys_addr), log_level::warning);
+    else log_print("MemoryIOP", log_level::warning, "Read32  physical address %08x", phys_addr);
     //res = bswap32(res);
     return res;
 }
 
 void Write8(u32 phys_addr, u8 data)
 {
-    log_print("MemoryIOP", "Write8 at physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryIOP", log_level::warning, "Write8 at physical address %08x", phys_addr);
     u32 temp = Read32(phys_addr);
     temp &= 0xFF << ((phys_addr & 3) << 8);
     temp |= data << ((phys_addr & 3) << 8);
@@ -155,6 +155,6 @@ void Write32(u32 phys_addr, u32 data)
 {
     //RAM
     if(phys_addr >= 0x00000000 && phys_addr < 0x00200000) ram[(phys_addr & 0x1ffffc) >> 2] = data;
-    log_print("MemoryIOP", "Write32 at physical address " + to_string(phys_addr), log_level::warning);
+    log_print("MemoryIOP", log_level::warning, "Write32 at physical address %08x", phys_addr);
 }
 }

@@ -11,7 +11,7 @@ enum log_level
     verbose = 8,
 };
 
-void log_print(std::string component, std::string msg, log_level level);
+void log_print(std::string component, log_level level, std::string msg, ...);
 
 extern log_level log_filter;
 

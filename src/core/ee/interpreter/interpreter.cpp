@@ -54,27 +54,24 @@ void ee_interpreter::single_step()
         }
     }
 
-    log_print("EE Interpreter", "PC: " + to_string(PC), log_level::debug);
+    log_print("EE Interpreter", log_level::debug, "PC: %08x", PC);
 
     for(int i = 0; i < 32; i++)
     {
-		std::string regnum(to_string(i));
-		std::string reghi(to_string(rGPR[i].ud[1]));
-		std::string reglo(to_string(rGPR[i].ud[0]));
-        log_print("EE Interpreter", "R" + regnum + ": " + reghi + " " + reglo, log_level::verbose);
+        log_print("EE Interpreter", log_level::verbose, "R%02x: %16x %16x", i, rGPR[i].ud[1], rGPR[i].ud[0]);
     }
 
     inst_code.hex = EE::Read32(PC);
 
-    log_print("EE Interpreter", "Instruction: " + to_string(inst_code.hex), log_level::debug);
+    log_print("EE Interpreter", log_level::debug, "Instruction: %08x", inst_code.hex);
 
-    log_print("EE Interpreter", "Instruction RS: " + to_string(inst_code.RS), log_level::verbose);
+    log_print("EE Interpreter", log_level::verbose, "Instruction RS: %02x", inst_code.RS);
 
-    log_print("EE Interpreter", "Instruction RT: " + to_string(inst_code.RT), log_level::verbose);
+    log_print("EE Interpreter", log_level::verbose, "Instruction RT: %02x", inst_code.RT);
 
-    log_print("EE Interpreter", "Instruction RD: " + to_string(inst_code.RD), log_level::verbose);
+    log_print("EE Interpreter", log_level::verbose, "Instruction RD: %02x", inst_code.RD);
 
-    log_print("EE Interpreter", "Instruction Opcode: " + to_string(inst_code.opcd), log_level::debug);
+    log_print("EE Interpreter", log_level::debug, "Instruction Opcode: %02x", inst_code.opcd);
 
     op_table[inst_code.opcd](inst_code);
 
@@ -97,12 +94,12 @@ void ee_interpreter::run()
 
 void ee_interpreter::unknown(ee_inst inst)
 {
-    log_print("EE Interpreter", "Unknown instruction " + to_string(inst.hex) + " at address " + to_string(PC), log_level::error);
+    log_print("EE Interpreter", log_level::error, "Unknown instruction %08x at address %08x", inst.hex, PC);
 }
 
 void ee_interpreter::exception()
 {
-    log_print("EE Interpreter", "Exception at address " + to_string(PC), log_level::debug);
+    log_print("EE Interpreter", log_level::debug, "Exception at address %08x", PC);
     rCOP0[EE::COP0_regs::EPC] = PC;
 
     //TODO: Fully implement this!

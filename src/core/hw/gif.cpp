@@ -7,7 +7,7 @@ namespace GIF
 void process_packet(u8* mem, u32 addr)
 {
     gif_tag_t tag = *reinterpret_cast<gif_tag_t*>(&mem[addr]);
-    log_print("GIF", "cmd: " + to_string(tag.cmd), log_level::warning);
+    log_print("GIF", log_level::warning, "cmd: %01x", tag.cmd);
 }
 
 void receive_dma(u32 addr)

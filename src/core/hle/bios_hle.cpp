@@ -38,7 +38,7 @@ static syscall_t primary_table[] =
 
 void unknown_syscall(u8 syscall)
 {
-    log_print("HLE", "Unknown syscall!", log_level::warning);
+    log_print("HLE", log_level::warning, "Unknown syscall %02x!", syscall);
 }
 
 std::array<u32,0x80> custom_syscall_addrs;
@@ -167,8 +167,6 @@ void get_thread_id(u8 syscall)
 
 void init_main_thread(u8 syscall)
 {
-    log_print("HLE", "Initializing main thread!", log_level::warning);
-
     u32 stack_base = rGPR[PARAM1].ul[0];
     u32 stack_size = rGPR[PARAM2].ul[0];
 
@@ -193,8 +191,6 @@ void init_main_thread(u8 syscall)
 
 void init_heap(u8 syscall)
 {
-    log_print("HLE", "Initializing heap!", log_level::warning);
-
     u32 heap_base = rGPR[PARAM1].ul[0];
     u32 heap_size = rGPR[PARAM2].ul[0];
 

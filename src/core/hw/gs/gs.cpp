@@ -71,7 +71,7 @@ void Write32(u32 addr, u32 data)
         }
         default:
         {
-            log_print("GS", "Write32 to unimplemented GS register!", log_level::warning);
+            log_print("GS", log_level::warning, "Write32 to unimplemented GS register %08x!", addr);
             break;
         }
         }

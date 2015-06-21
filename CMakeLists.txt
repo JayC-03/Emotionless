@@ -1,12 +1,7 @@
 cmake_minimum_required(VERSION 2.8.8)
 project(emotionless)
 
-set(ASMJIT_STATIC TRUE)
-
-include_directories(externals/asmjit/src/asmjit)
 include_directories(src)
-
-link_directories(externals/asmjit)
 
 option(USE_BIOS_HLE "Emulate the PS2's BIOS using HLE" ON)
 option(USE_JIT "Emulate the PS2's CPUs using JITs" OFF)
@@ -32,5 +27,4 @@ endif()
 
 add_definitions(-std=gnu++0x)
 
-add_subdirectory(externals/asmjit)
 add_subdirectory(src)

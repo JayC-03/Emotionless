@@ -1,11 +1,16 @@
+#include <cstdarg>
+
 #include "common/log.h"
 
 log_level log_filter;
 
 //All you need for logging is slight upgrade of printf.
-void log_print(std::string component, std::string msg, log_level level)
+void log_print(std::string component, log_level level, std::string msg, ...)
 {
     if(!(level & log_filter)) return;
+
+    va_list args;
+    va_start(args, msg.c_str());
 
     std::string level_str;
     switch(level)
@@ -32,7 +37,9 @@ void log_print(std::string component, std::string msg, log_level level)
     }
     }
 
-    std::string final_msg = "[" + component + " | " + level_str + "] " + msg;
+    std::string final_msg = "[" + component + " | " + level_str + "] " + msg + "\n";
 
-    printf("%s\n",final_msg.c_str());
+    vprintf(final_msg.c_str(), args);
+
+    va_end(args);
 }

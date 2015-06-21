@@ -53,7 +53,7 @@ void dmac_channel_t::single_step_chain()
         if(tag == 0 || tag == 7)
         {
             chcr &= 0xfffffeff;
-            log_print("DMAC", "DMA finished", log_level::warning);
+            log_print("DMAC", log_level::warning, "DMA finished");
         }
     }
 
@@ -106,6 +106,7 @@ void dmac_channel_t::single_step_chain()
         u8 asp = (chcr >> 4) & 3;
         chcr &= 0xffffffcf;
         asp++;
+		asp &= 3;
         chcr |= asp << 4;
         break;
     }
@@ -118,6 +119,7 @@ void dmac_channel_t::single_step_chain()
             u8 asp = (chcr >> 4) & 3;
             chcr &= 0xffffffcf;
             asp--;
+			asp &= 3;
             chcr |= asp << 4;
             tadr = asr[asp];
         }
@@ -150,7 +152,7 @@ u64 fetch_dma_tag(u32 addr)
 
 void unknown_receiver(u32 addr)
 {
-    log_print("DMAC", "Unknown DMA receiver!", log_level::warning);
+    log_print("DMAC", log_level::warning, "Unknown DMA receiver!");
 }
 
 void init_dmac_channels()
@@ -195,7 +197,7 @@ u32 Read32(u32 addr)
     }
     default:
     {
-        log_print("DMAC", "Read32 from unimplemented DMAC register at " + to_string(addr) + "!", log_level::warning);
+        log_print("DMAC", log_level::warning, "Read32 from unimplemented DMAC register at %08x!", addr);
         break;
     }
     }
@@ -253,7 +255,7 @@ void Write32(u32 addr, u32 data)
     }
     default:
     {
-        log_print("DMAC", "Write32 to unimplemented DMAC register!", log_level::warning);
+        log_print("DMAC", log_level::warning, "Write32 to unimplemented DMAC register %08x with %08x!", addr, data);
         break;
     }
     }
