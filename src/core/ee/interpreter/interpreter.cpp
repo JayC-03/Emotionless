@@ -58,7 +58,7 @@ void ee_interpreter::single_step()
 
     for(int i = 0; i < 32; i++)
     {
-        log_print("EE Interpreter", log_level::verbose, "R%02x: %16x %16x", i, rGPR[i].ud[1], rGPR[i].ud[0]);
+        log_print("EE Interpreter", log_level::verbose, "R%02x: %08x %08x %08x %08x", i, rGPR[i].ul[3], rGPR[i].ul[2], rGPR[i].ul[1], rGPR[i].ul[0]);
     }
 
     inst_code.hex = EE::Read32(PC);

@@ -9,7 +9,7 @@
 
 // Helper functions:
 
-#ifdef _WIN32
+/*#ifdef _WIN32
 template <typename T>
 static inline int CountSetBits(T v)
 {
@@ -44,8 +44,8 @@ static inline int LeastSignificantSetBit(u64 val)
 	unsigned long index;
 	_BitScanForward64(&index, val);
 	return (int)index;
-}
-#else
+}*/
+//#else
 static inline int CountSetBits(u8 val) { return __builtin_popcount(val); }
 static inline int CountSetBits(u16 val) { return __builtin_popcount(val); }
 static inline int CountSetBits(u32 val) { return __builtin_popcount(val); }
@@ -54,7 +54,7 @@ static inline int LeastSignificantSetBit(u8 val) { return __builtin_ctz(val); }
 static inline int LeastSignificantSetBit(u16 val) { return __builtin_ctz(val); }
 static inline int LeastSignificantSetBit(u32 val) { return __builtin_ctz(val); }
 static inline int LeastSignificantSetBit(u64 val) { return __builtin_ctzll(val); }
-#endif
+//#endif
 
 // namespace avoids conflict with OS X Carbon; don't use BitSet<T> directly
 namespace BS

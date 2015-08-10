@@ -20,7 +20,7 @@ void main_loop(std::string fn, std::string fn2)
     EE::interpreter = new ee_interpreter();
     IOP::interpreter = new iop_interpreter();
 
-    log_filter = error | warning | debug;
+    log_filter = error | warning | debug;// | verbose;
 
     EE::interpreter->init();
 #ifdef USE_JIT
@@ -35,26 +35,30 @@ void main_loop(std::string fn, std::string fn2)
 #endif
 
     FILE* bios = fopen(fn.c_str(),"rb");
-    fread(MemoryEE::bios,1,0x400000,bios);
-    fclose(bios);
+    if(bios)
+    {
+        fread(MemoryEE::bios,1,0x400000,bios);
+        fclose(bios);
+    }
+    else return 1;
 #ifdef USE_BIOS_HLE
     FILE* elffp = fopen(fn2.c_str(),"rb");
     ELF::ELF elf;
     elf.load(elffp);
 #endif
 
-    for(int i = 0; i < 2; i++)
+    for(int i = 0; i < 500000; i++)
     {
 #ifdef USE_JIT
         ee_jit.compile();
         ee_jit.run();
 #else
-        EE::interpreter->run();
+        EE::interpreter->single_step();
 #endif
-        DMAC::run();
+        DMAC::single_step();
 
 #ifndef USE_BIOS_HLE
-        if((i & 3) == 0) IOP::interpreter->single_step();
+        if((i & 7) == 0) IOP::interpreter->single_step();
 #endif
     }
 
