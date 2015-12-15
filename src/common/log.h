@@ -14,5 +14,3 @@ enum log_level
 void log_print(std::string component, log_level level, std::string msg, ...);
 
 extern log_level log_filter;
-
-#define to_string std::to_string

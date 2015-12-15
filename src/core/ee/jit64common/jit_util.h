@@ -10,20 +10,20 @@
 
 // A place to throw blocks of code we don't want polluting the cache, e.g. rarely taken
 // exception branches.
-class FarCodeCache : public Gen::X64CodeBlock
+class FarCodeCache : public Gen::x64_code_block
 {
 private:
 	bool m_enabled = false;
 public:
 	bool Enabled() { return m_enabled; }
-	void Init(int size) { AllocCodeSpace(size); m_enabled = true; }
-	void Shutdown() { FreeCodeSpace(); m_enabled = false; }
+	void Init(int size) { alloc_code_space(size); m_enabled = true; }
+	void Shutdown() { free_code_space(); m_enabled = false; }
 };
 
 static const int CODE_SIZE = 1024 * 1024 * 32;
 
 // Like XCodeBlock but has some utilities for memory access.
-class EmuCodeBlock : public Gen::X64CodeBlock
+class EmuCodeBlock : public Gen::x64_code_block
 {
 public:
 	FarCodeCache farcode;

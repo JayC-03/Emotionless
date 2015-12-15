@@ -7,7 +7,7 @@
 #include <array>
 #include <cinttypes>
 
-#include "Common/x64Emitter.h"
+#include "common/emitters/x64_emitter.h"
 
 enum FlushMode
 {
@@ -101,7 +101,7 @@ public:
 		if (IsBound(preg))
 			return regs[preg].location.GetSimpleReg();
 
-		PanicAlert("Not so simple - %u", (unsigned int)preg);
+		//PanicAlert("Not so simple - %u", (unsigned int)preg);
 		return Gen::INVALID_REG;
 	}
 	virtual Gen::OpArg GetDefaultLocation(size_t reg) const = 0;
@@ -126,7 +126,7 @@ public:
 	void LockX(T x)
 	{
 		if (xregs[x].locked)
-			PanicAlert("RegCache: x %i already locked!", x);
+			//PanicAlert("RegCache: x %i already locked!", x);
 		xregs[x].locked = true;
 	}
 	template<typename T, typename... Args>
@@ -140,7 +140,7 @@ public:
 	void UnlockX(T x)
 	{
 		if (!xregs[x].locked)
-			PanicAlert("RegCache: x %i already unlocked!", x);
+			//PanicAlert("RegCache: x %i already unlocked!", x);
 		xregs[x].locked = false;
 	}
 	template<typename T, typename... Args>

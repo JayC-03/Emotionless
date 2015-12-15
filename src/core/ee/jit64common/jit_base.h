@@ -39,7 +39,7 @@
 
 #define JITDISABLE(setting)
 
-class JitBase : public CPUCoreBase
+class JitBase : public ee_core_base
 {
 protected:
 	struct JitOptions

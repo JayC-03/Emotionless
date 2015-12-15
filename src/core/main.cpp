@@ -1,7 +1,7 @@
 #include "core/main.h"
 #include "core/ee/ee.h"
 #ifdef USE_JIT
-#include "core/ee/jit/jit-x64/jit_x64.h"
+#include "core/ee/jit64/jit.h"
 #endif
 #include "core/iop/iop.h"
 #include "core/memmap.h"
@@ -24,7 +24,7 @@ void main_loop(std::string fn, std::string fn2)
 
     EE::interpreter->init();
 #ifdef USE_JIT
-    ee_jit_x64 ee_jit;
+    EEJit64 ee_jit;
     ee_jit.init();
 #endif
     IOP::interpreter->init();
@@ -40,7 +40,7 @@ void main_loop(std::string fn, std::string fn2)
         fread(MemoryEE::bios,1,0x400000,bios);
         fclose(bios);
     }
-    else return 1;
+    else return;
 #ifdef USE_BIOS_HLE
     FILE* elffp = fopen(fn2.c_str(),"rb");
     ELF::ELF elf;
@@ -50,7 +50,7 @@ void main_loop(std::string fn, std::string fn2)
     for(int i = 0; i < 500000; i++)
     {
 #ifdef USE_JIT
-        ee_jit.compile();
+        ee_jit.Jit();
         ee_jit.run();
 #else
         EE::interpreter->single_step();

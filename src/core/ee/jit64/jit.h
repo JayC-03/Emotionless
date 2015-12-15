@@ -8,7 +8,7 @@
 #include "core/ee/jit64common/jit_base.h"
 #include "core/ee/jit64common/jit_cache.h"
 
-class Jit64 : public Jitx86Base
+class EEJit64 : public Jitx86Base
 {
 private:
 
@@ -16,8 +16,8 @@ private:
 	FPURegCache fpr;
 
 public:
-	Jit64() {}
-	~Jit64() {}
+	EEJit64() {}
+	~EEJit64() {}
 
 	void init() override;
 
@@ -32,7 +32,7 @@ public:
 	void clear_cache() override;
 
 	// Run!
-	void Run() override;
+	void run() override;
 	void SingleStep() override;
 
 	// OPCODES
