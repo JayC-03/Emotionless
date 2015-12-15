@@ -12,29 +12,31 @@ class EEJit64 : public Jitx86Base
 {
 private:
 
-	GPRRegCache gpr;
-	FPURegCache fpr;
+    GPRRegCache gpr;
+    FPURegCache fpr;
 
 public:
-	EEJit64() {}
-	~EEJit64() {}
+    EEJit64() {}
+    ~EEJit64() {}
 
-	void init() override;
+    void init() override;
 
-	void shutdown() override;
+    void shutdown() override;
 
-	// Jit!
+    // Jit!
 
-	void Jit(u32 em_address) override;
+    void Jit(u32 em_address) override;
 
-	JitBlockCache *GetBlockCache() override { return &blocks; }
+    JitBlockCache *GetBlockCache() override {
+        return &blocks;
+    }
 
-	void clear_cache() override;
+    void clear_cache() override;
 
-	// Run!
-	void run() override;
-	void SingleStep() override;
+    // Run!
+    void run() override;
+    void SingleStep() override;
 
-	// OPCODES
-	void FallBackToInterpreter(ee_inst _inst);
+    // OPCODES
+    void FallBackToInterpreter(ee_inst _inst);
 }

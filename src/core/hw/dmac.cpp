@@ -106,7 +106,7 @@ void dmac_channel_t::single_step_chain()
         u8 asp = (chcr >> 4) & 3;
         chcr &= 0xffffffcf;
         asp++;
-		asp &= 3;
+        asp &= 3;
         chcr |= asp << 4;
         break;
     }
@@ -119,7 +119,7 @@ void dmac_channel_t::single_step_chain()
             u8 asp = (chcr >> 4) & 3;
             chcr &= 0xffffffcf;
             asp--;
-			asp &= 3;
+            asp &= 3;
             chcr |= asp << 4;
             tadr = asr[asp];
         }

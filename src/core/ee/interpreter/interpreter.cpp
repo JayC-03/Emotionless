@@ -83,13 +83,13 @@ void ee_interpreter::single_step()
 
 void ee_interpreter::run()
 {
-	end_block = false;
-	int cycles = 0;
-	while(!end_block)
-	{
-		single_step();
-		cycles++;
-	}
+    end_block = false;
+    int cycles = 0;
+    while(!end_block)
+    {
+        single_step();
+        cycles++;
+    }
 }
 
 void ee_interpreter::unknown(ee_inst inst)

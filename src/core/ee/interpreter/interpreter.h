@@ -10,12 +10,12 @@ typedef void (*interpreter_func_type)(ee_inst);
 class ee_interpreter : public ee_core_base
 {
 public:
-	bool end_block;
+    bool end_block;
 
     void init() override;
     void shutdown() override;
     void single_step() override;
-	void run() override;
+    void run() override;
 
     static interpreter_func_type op_table[64];
     static interpreter_func_type op_table0[64];
@@ -42,7 +42,7 @@ public:
     static void dsll(ee_inst inst);
     static void dsll32(ee_inst inst);
     static void srl(ee_inst inst);
-	static void dsrl(ee_inst inst);
+    static void dsrl(ee_inst inst);
     static void dsrl32(ee_inst inst);
     static void sra(ee_inst inst);
     static void dsra32(ee_inst inst);
@@ -52,10 +52,10 @@ public:
     static void swc1(ee_inst inst);
     static void bne(ee_inst inst);
     static void beq(ee_inst inst);
-	static void bltz(ee_inst inst);
+    static void bltz(ee_inst inst);
     static void bgez(ee_inst inst);
     static void blez(ee_inst inst);
-	static void bgtz(ee_inst inst);
+    static void bgtz(ee_inst inst);
     static void bnel(ee_inst inst);
     static void beql(ee_inst inst);
     static void blezl(ee_inst inst);
@@ -98,7 +98,7 @@ public:
     static void mfhi(ee_inst inst);
     static void mflo(ee_inst inst);
     static void tlbwi(ee_inst inst);
-	static void paddub(ee_inst inst);
+    static void paddub(ee_inst inst);
     static void padduw(ee_inst inst);
     static void movn(ee_inst inst);
     static void ei(ee_inst inst);

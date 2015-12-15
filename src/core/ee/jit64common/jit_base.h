@@ -42,63 +42,65 @@
 class JitBase : public ee_core_base
 {
 protected:
-	struct JitOptions
-	{
-		bool fastmem;
-		bool memcheck;
-		bool alwaysUseMemFuncs;
-	};
-	struct JitState
-	{
-		u32 compilerPC;
-		u32 blockStart;
-		int instructionNumber;
-		int instructionsLeft;
-		int downcountAmount;
-		u32 numLoadStoreInst;
-		u32 numFloatingPointInst;
-		// If this is set, we need to generate an exception handler for the fastmem load.
-		u8* fastmemLoadStore;
-		// If this is set, a load or store already prepared a jump to the exception handler for us,
-		// so just fixup that branch instead of testing for a DSI again.
-		bool fixupExceptionHandler;
-		Gen::FixupBranch exceptionHandler;
-		// If these are set, we've stored the old value of a register which will be loaded in revertLoad,
-		// which lets us revert it on the exception path.
-		int revertGprLoad;
-		int revertFprLoad;
+    struct JitOptions
+    {
+        bool fastmem;
+        bool memcheck;
+        bool alwaysUseMemFuncs;
+    };
+    struct JitState
+    {
+        u32 compilerPC;
+        u32 blockStart;
+        int instructionNumber;
+        int instructionsLeft;
+        int downcountAmount;
+        u32 numLoadStoreInst;
+        u32 numFloatingPointInst;
+        // If this is set, we need to generate an exception handler for the fastmem load.
+        u8* fastmemLoadStore;
+        // If this is set, a load or store already prepared a jump to the exception handler for us,
+        // so just fixup that branch instead of testing for a DSI again.
+        bool fixupExceptionHandler;
+        Gen::FixupBranch exceptionHandler;
+        // If these are set, we've stored the old value of a register which will be loaded in revertLoad,
+        // which lets us revert it on the exception path.
+        int revertGprLoad;
+        int revertFprLoad;
 
-		bool assumeNoPairedQuantize;
-		bool firstFPInstructionFound;
-		bool isLastInstruction;
-		int skipInstructions;
-		bool carryFlagSet;
-		bool carryFlagInverted;
+        bool assumeNoPairedQuantize;
+        bool firstFPInstructionFound;
+        bool isLastInstruction;
+        int skipInstructions;
+        bool carryFlagSet;
+        bool carryFlagInverted;
 
-		int fifoBytesThisBlock;
+        int fifoBytesThisBlock;
 
-		ee_inst op;
-		u8* rewriteStart;
+        ee_inst op;
+        u8* rewriteStart;
 
-		JitBlock *curBlock;
-	};
+        JitBlock *curBlock;
+    };
 
 public:
-	// This should probably be removed from public:
-	JitOptions jo;
-	JitState js;
+    // This should probably be removed from public:
+    JitOptions jo;
+    JitState js;
 
-	virtual JitBaseBlockCache *GetBlockCache() = 0;
+    virtual JitBaseBlockCache *GetBlockCache() = 0;
 
-	virtual void Jit(u32 em_address) = 0;
+    virtual void Jit(u32 em_address) = 0;
 };
 
 class Jitx86Base : public JitBase, public EmuCodeBlock
 {
 protected:
-	JitBlockCache blocks;
+    JitBlockCache blocks;
 public:
-	JitBlockCache *GetBlockCache() override { return &blocks; }
+    JitBlockCache *GetBlockCache() override {
+        return &blocks;
+    }
 };
 
 extern JitBase *jit;

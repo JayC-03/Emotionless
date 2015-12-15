@@ -8,11 +8,11 @@ JitBase *jit;
 
 void Jit(u32 em_address)
 {
-	jit->Jit(em_address);
+    jit->Jit(em_address);
 }
 
 u32 Helper_Mask(u8 mb, u8 me)
 {
-	u32 mask = ((u32)-1 >> mb) ^ (me >= 31 ? 0 : (u32)-1 >> (me + 1));
-	return mb > me ? ~mask : mask;
+    u32 mask = ((u32)-1 >> mb) ^ (me >= 31 ? 0 : (u32)-1 >> (me + 1));
+    return mb > me ? ~mask : mask;
 }
