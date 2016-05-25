@@ -1,0 +1,32 @@
+INCFLAGS := -I$(CORE_DIR)/src
+
+SOURCES_CXX := $(CORE_DIR)/src/core/main.cpp \
+               $(CORE_DIR)/src/core/memmap.cpp \
+               $(CORE_DIR)/src/core/ee/ee.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_branch.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_cop0.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_cop1.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_integer.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_loadstore.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_mmi.cpp \
+               $(CORE_DIR)/src/core/ee/interpreter/interpreter_tables.cpp \
+               $(CORE_DIR)/src/core/hle/bios_hle.cpp \
+               $(CORE_DIR)/src/core/hle/elf.cpp \
+               $(CORE_DIR)/src/core/hw/dmac.cpp \
+               $(CORE_DIR)/src/core/hw/gif.cpp \
+               $(CORE_DIR)/src/core/hw/gs/gs.cpp \
+               $(CORE_DIR)/src/core/iop/iop.cpp \
+               $(CORE_DIR)/src/core/iop/interpreter/interpreter.cpp \
+               $(CORE_DIR)/src/core/iop/interpreter/interpreter_branch.cpp \
+               $(CORE_DIR)/src/core/iop/interpreter/interpreter_cop0.cpp \
+               $(CORE_DIR)/src/core/iop/interpreter/interpreter_integer.cpp \
+               $(CORE_DIR)/src/core/iop/interpreter/interpreter_loadstore.cpp \
+               $(CORE_DIR)/src/core/iop/interpreter/interpreter_tables.cpp \
+               $(CORE_DIR)/src/common/log.cpp \
+               $(CORE_DIR)/src/common/memory_util.cpp \
+               $(CORE_DIR)/src/common/x64_cpu_detect.cpp \
+               $(CORE_DIR)/src/common/emitters/x64_emitter.cpp \
+               $(CORE_DIR)/src/ui/libretro/libretro.cpp
+			   
+COMMONFLAGS += -fpermissive
